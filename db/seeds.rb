@@ -12,7 +12,7 @@ Goal.destroy_all
 
 Deposit.destroy_all
 
-kenneth = Customer.create!({ customer_name: "Kenneth Cannon" })
+kenneth = Customer.create!({ customer_name: "Kenneth Frequency" })
 kenneth.goals.create!({ goal_name: "College Fund", goal_amount: "100000"})
 kenneth.goals.create!({ goal_name: "New House", goal_amount: "60000"})
 kenneth.goals.create!({ goal_name: "Retirement", goal_amount: "4000000"})
@@ -46,7 +46,7 @@ shannon.goals.create!({ goal_name: "College Fund", goal_amount: "98751.23"})
 shannon.goals.create!({ goal_name: "New House", goal_amount: "175693.33"})
 
 
-kenny = Customer.create!({ customer_name: "Kenny McCormic" })
+kenny = Customer.create!({ customer_name: "Kenny McCormick" })
 kenny.goals.create!({ goal_name: "New House", goal_amount: "12635.98"})
 
 

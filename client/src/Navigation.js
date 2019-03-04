@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import Create from './Create'
 // import Edit from './Edit'
 // import Home from './'
@@ -8,13 +8,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 
 class Navigation extends Component {
-  constructor(props) {
-    super(props)
 
-    this.props = {
-    }
-    
-  }
   render() {
     return (
       <>
