@@ -28,5 +28,6 @@
   "main": "yes",
   "repository": "yes",
   "author": "yes",
-  "license": "yes"
+  "license": "yes",
+  "proxy": "http://localhost:3000"
 }
