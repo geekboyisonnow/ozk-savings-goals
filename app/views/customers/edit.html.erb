@@ -1,0 +1,13 @@
+<h1>Editing Customer</h1>
+
+<%= render 'form', customer: @customer %>
+
+List of Goals:
+<ul>
+<% @customer.goals.each do |goal| %>
+  <li><%= goal.goal_name %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Show', @customer %> |
+<%= link_to 'Back', customers_path %>

@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Customer name:</strong>
+  <%= @customer.customer_name %>
+</p>
+
+<% if @customer.goals.any? %>
+List of Goals:
+<ul>
+<% @customer.goals.each do |goal| %>
+  <li><%= goal.goal_name %></li>
+  <% end %>
+</ul>
+<% else %>
+<p>The Customer has no Goals yet</p>
+<% link_to 'Create a new Goal', new_goal_path %>
+<% end %>
+
+<%= link_to 'Edit', edit_customer_path(@customer) %> |
+<%= link_to 'Back', customers_path %>

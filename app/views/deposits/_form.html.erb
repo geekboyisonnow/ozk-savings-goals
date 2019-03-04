@@ -1,0 +1,33 @@
+<%= form_with(model: @deposit, local: true) do |form| %>
+  <% if @deposit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(deposit.errors.count, "error") %> prohibited this deposit from being saved:</h2>
+
+      <ul>
+      <% @deposit.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :deposit_amount %>
+    <%= form.text_field :deposit_amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :goal_id %>
+    <%= form.collection_select(:goal_id, Goal.all, :id, :goal_name) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :customer_id %>
+    <%= form.collection_select(:customer_id, Customer.all, :id, :customer_name) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+<% end %>

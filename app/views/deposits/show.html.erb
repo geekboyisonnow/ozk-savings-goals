@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Deposit amount:</strong>
+  <%= @deposit.deposit_amount %>
+</p>
+
+<p>
+  <strong>Goal:</strong>
+  <%= @deposit.goal.goal_name %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @deposit.goal.customer.customer_name %>
+</p>
+
+<%= link_to 'Edit', edit_deposit_path(@deposit) %> |
+<%= link_to 'Back', deposits_path %>

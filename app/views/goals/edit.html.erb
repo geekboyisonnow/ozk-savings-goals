@@ -1,0 +1,13 @@
+<h1>Editing Goal</h1>
+
+<%= render 'form', goal: @goal %>
+
+<ul>
+<% @goal.deposit.each do |goal| %>
+  <li><%= deposit.deposit_amount %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Show', @goal %> |
+<%= link_to 'Back', goals_path %>
+  
