@@ -64,6 +64,17 @@ class Create extends Component {
             })
     }
 
+    nextPage = () => {
+        this.setState(
+            () => {
+                return { page: this.state.page + 1 }
+            },
+            () => {
+                this.getGoalsFromAPI()
+            }
+        )
+    }
+
     render() {
         return (
             <>
@@ -92,7 +103,43 @@ class Create extends Component {
                                     </label>
                                 </div>
                                 <div className="column">
-                                    <ul />
+                                    <ul>
+                                        {this.state.characters.map(
+                                            (character) => {
+                                                return (
+                                                    <li>{goal.goal_name()}</li>
+                                                )
+                                            }
+                                        )}
+
+                                        {this.state.characters.map(
+                                            (character) => {
+                                                return (
+                                                    <li>
+                                                        {goal.goal_amount()}
+                                                    </li>
+                                                )
+                                            }
+                                        )}
+
+                                        {this.state.characters.map(
+                                            (character) => {
+                                                return (
+                                                    <li>
+                                                        {goal.deposit_amount()}
+                                                    </li>
+                                                )
+                                            }
+                                        )}
+
+                                        {this.state.characters.map(
+                                            (character) => {
+                                                return (
+                                                    <li>{goal.targetDate()}</li>
+                                                )
+                                            }
+                                        )}
+                                    </ul>
                                 </div>
                                 <div className="column">
                                     <input
