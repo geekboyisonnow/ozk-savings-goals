@@ -30,7 +30,6 @@ class Goal {
   targetDate() {
     return this.targetDate
   }
-
 }
 
 class Create extends Component {
@@ -51,7 +50,6 @@ class Create extends Component {
   let goals = goalData.goals.map(
     (goalData) => {
       let newGoal = new Goal(goalData)
-      
       return newGoal
     }
   )
@@ -66,7 +64,6 @@ class Create extends Component {
   })
   })
   
-
   render() {
 
     return (
@@ -76,8 +73,8 @@ class Create extends Component {
           <h2>Create A New Savings Goals</h2>
           <section>Bank OZK helps you save today to meet your financial goals for tomorrow.</section>
      
-     <div className="column">
-      <form action="/new" method="post" className="row">
+        <div className="column">
+                      <form action="/new" method="post" className="row">
           <div className="column">
             <label htmlFor="name" className="label">Goal Name:</label>
             <label htmlFor="target" className="label">Goal Amount:</label>
@@ -110,8 +107,7 @@ class Create extends Component {
             </div>
           </>
     );
-  }
-  
+  } 
 }
 
 export default Create;
