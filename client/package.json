@@ -38,11 +38,6 @@
     "pretty-quick": "^1.10.0"
   },
   "prettier": {
-    "husky": {
-      "hooks": {
-        "pre-commit": "pretty-quick --staged"
-      }
-    },
     "trailingComma": "es5",
     "tabWidth": 4,
     "semi": false,
