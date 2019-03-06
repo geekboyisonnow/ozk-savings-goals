@@ -18,7 +18,9 @@ class Progress extends Component {
       <>
       
       <div className="content">
-          <h2 >Savings Goals Progress</h2>        
+          <h2 >Savings Goals Progress</h2>  
+
+          <div className="progress-buttons">      
         <div className="row">
 
           <div className="mobile-column" >
@@ -103,7 +105,7 @@ class Progress extends Component {
           </div>
           </div>
     
-          
+          <div className="progress-buttons">
           <div className="content">
           <div className="buttons">
             <div className="button-column">
@@ -129,7 +131,8 @@ class Progress extends Component {
             </div>
             </div>
             </div> 
-    
+            </div>
+            </div>
     </>
       );
   }

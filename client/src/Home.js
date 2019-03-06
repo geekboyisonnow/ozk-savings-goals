@@ -7,7 +7,7 @@ class Home extends Component {
   constructor(props) {
     super(props)
 
-    this.state = true
+    this.state = null
   }
 
   render() {
