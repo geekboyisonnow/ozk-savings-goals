@@ -50,9 +50,9 @@ class Create extends Component {
         this.setState({ loading: true })
 
         fetch(`https://localhost:3000/goals/?page=${this.state.page}`)
-            .then(response => response.json())
-            .then(goalData => {
-                let goals = goalData.goals.map(goalData => {
+            .then((response) => response.json())
+            .then((goalData) => {
+                let goals = goalData.goals.map((goalData) => {
                     let newGoal = new Goal(goalData)
                     return newGoal
                 })
