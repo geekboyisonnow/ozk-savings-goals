@@ -45,7 +45,7 @@ class Create extends Component {
 
     this.getGoalsFromAPI()
 
-  
+  }
   
   fetch('http://localhost:3000/goals/1.json').then(response => response.json()).then(goalData => {
   let goals = goalData.goals.map(
@@ -65,6 +65,7 @@ class Create extends Component {
     ul.appendChild(newLI)
   })
   })
+  
 
   render() {
 
@@ -108,9 +109,9 @@ class Create extends Component {
             </div>
             </div>
           </>
-      );
-    }
+    );
   }
+  
 }
 
 export default Create;
