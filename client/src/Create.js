@@ -107,7 +107,7 @@ class Create extends Component {
                                         {this.state.characters.map(
                                             (character) => {
                                                 return (
-                                                    <li>{goal.goal_name()}</li>
+                                                    <li>{goals.goal_name()}</li>
                                                 )
                                             }
                                         )}
@@ -116,7 +116,7 @@ class Create extends Component {
                                             (character) => {
                                                 return (
                                                     <li>
-                                                        {goal.goal_amount()}
+                                                        {goals.goal_amount()}
                                                     </li>
                                                 )
                                             }
@@ -126,7 +126,7 @@ class Create extends Component {
                                             (character) => {
                                                 return (
                                                     <li>
-                                                        {goal.deposit_amount()}
+                                                        {goals.deposit_amount()}
                                                     </li>
                                                 )
                                             }
@@ -135,7 +135,7 @@ class Create extends Component {
                                         {this.state.characters.map(
                                             (character) => {
                                                 return (
-                                                    <li>{goal.targetDate()}</li>
+                                                    <li>{goals.targetDate()}</li>
                                                 )
                                             }
                                         )}
