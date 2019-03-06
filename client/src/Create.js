@@ -74,7 +74,7 @@ class Create extends Component {
           <section>Bank OZK helps you save today to meet your financial goals for tomorrow.</section>
      
         <div className="column">
-              <form action="/new" method="post" className="row">
+                  <form action="/new" method="post" className="row">
           <div className="column">
             <label htmlFor="name" className="label">Goal Name:</label>
             <label htmlFor="target" className="label">Goal Amount:</label>
