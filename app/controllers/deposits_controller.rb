@@ -13,6 +13,20 @@ class DepositsController < ApplicationController
     end
   end
 
+  def balance
+    @balance = Deposit.sum(:deposit)
+
+    respond_to do |format|
+      if @deposit.save
+        format.html { redirect_to @deposit, notice: 'Deposits Totaled.' }
+        format.json { render :show, status: :created, location: @deposit }
+      else
+        format.html { render :new }
+        format.json { render json: @deposit.balance, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # GET /deposits/1
   # GET /deposits/1.json
   def show
