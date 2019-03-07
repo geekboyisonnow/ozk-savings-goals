@@ -256,7 +256,7 @@ class Edit extends Component {
                               className="button-label"
                             >
                               <button type="submit">
-                                <strong>NEW</strong>
+                                <strong>UPDATE</strong>
                               </button>
                             </div>
                           </div>
