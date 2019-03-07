@@ -9,6 +9,7 @@ class Create extends Component {
         super(props)
 
         this.state = {
+            customerID: 1,
             goals: [],
             newItemText: ''
         }
@@ -16,9 +17,7 @@ class Create extends Component {
 
     reloadAllGoals = () => {
         axios
-            .get(
-                `https://localhost:3000/goals`
-            )
+            .get(`/goals/1.json`)
             .then(repsonse => {
                 this.setState({
                     goals: Response.data
@@ -38,8 +37,7 @@ class Create extends Component {
 
     complete = event => {
         axios
-            .put(
-                `https://localhost:3000/goals/${event.target.dataset.goal_id}`,
+            .put(`/goals/1/${event.target.dataset.goal_id}`, 
                 {
                     item: {
                         complete: true
@@ -54,7 +52,7 @@ class Create extends Component {
     deleteGoal = event => {
         axios
             .delete(
-                `https://localhost:3000/goals/${
+                `/goals/1.json${
                 event.target.dataset.goal_id}`,
                 {
                     item: ''
@@ -65,14 +63,14 @@ class Create extends Component {
             })
     }
 
-    newGoal = event => {
+    newItemGoalName = event => {
         event.prevent.Default()
 
         axios
-            .post(`https://localhost:3000/goals`,
+            .post(`/goals/1.json`,
                 {
                     item: {
-                        text: this.state.newItemText
+                        text: this.state.newItemText.goal_name
                     }
                 }
             )
@@ -84,6 +82,67 @@ class Create extends Component {
                 })
             })
     }
+
+    newItemGoalAmount = event => {
+        event.prevent.Default()
+
+        axios
+            .post(`/goals/1.json`,
+                {
+                    item: {
+                        text: this.state.newItemText.goal_amount
+                    }
+                }
+            )
+            .then(response => {
+                console.log(response.date)
+                this.reloadAllGoals()
+                this.setState({
+                    newItemText: ''
+                })
+            })
+    }
+    
+    newItemDepositAmount = event => {
+        event.prevent.Default()
+
+        axios
+            .post(`/goals/1.json`,
+                {
+                    item: {
+                        text: this.state.newItemText.deposit_amount
+                    }
+                }
+            )
+            .then(response => {
+                console.log(response.date)
+                this.reloadAllGoals()
+                this.setState({
+                    newItemText: ''
+                })
+            })
+    }
+
+    // newItemGoalBalance = event => {
+    //     event.prevent.Default()
+
+    //     axios
+    //         .post(`/goals/1.json`,
+    //             {
+    //                 item: {
+    //                     text: this.state.newItemText
+    //                 }
+    //             }
+    //         )
+    //         .then(response => {
+    //             console.log(response.date)
+    //             this.reloadAllGoals()
+    //             this.setState({
+    //                 newItemText: ''
+    //             })
+    //         })
+    // }
+
 
     render() {
         return (
@@ -106,10 +165,10 @@ class Create extends Component {
                                     Goal Amount:
                                     </label>
                                 <label htmlFor="current" className="label">
-                                    Balance:
+                                    Deposit Amount:
                                     </label>
                                 <label htmlFor="date" className="label">
-                                    Target Date:
+                                    Balance:
                                     </label>
                             </div>
                             <div className="column">
@@ -126,44 +185,62 @@ class Create extends Component {
                                                 >
                                                     {goal.text.goal_name}
                                                     {goal.text.goal_amount}
-                                                    {goal.text.deposit_amount}
-                                                    {goal.text.goal_date}</li>
+                                                    {goal.text.deposit_amount}</li>
+                                                    // {newItemGoalBalance()}
                                             )
                                         })}
                                 </ul>
                             </div>
                             <div className="column">
+                            <form onSubmit={this.newItem}>
                                 <input
                                     type="text"
                                     id="name"
                                     name="goal_name"
                                     className="input-label"
+                                    placeholder={this.state.newItemText.goal_name}
+                                    onChange={this.changeText}
                                 />
+                                </form>
+                                <form onSubmit={this.newItem}>
                                 <input
-                                    type="text"
+                                    type="money"
                                     id="target"
-                                    name="target_amount"
+                                    name="goal_amount"
                                     className="input-label"
+                                    placeholder={this.state.newItemText.goal_amount}
+                                    onChange={this.changeText}
                                 />
+                                </form>
+                                <form onSubmit={this.newItem}>
                                 <input
-                                    type="text"
+                                    type="money"
                                     id="current"
-                                    name="current_amount"
+                                    name="deposit_amount"
                                     className="input-label"
-                                />
+                                    placeholder={this.state.newItemText.deposit_amount}
+                                    onChange={this.changeText}
+                                /></form>
+                                <form onSubmit={this.newItem}>
                                 <input
-                                    type="date"
+                                    type="money"
                                     id="date"
-                                    name="target_date"
+                                    name="newItemGoalBalance"
                                     className="input-label"
-                                />
+                                    // placeholder={newItemGoalBalance}
+                                    onChange={this.changeText}
+                                /></form>
                             </div>
                         </form>
                     </div>
 
                     <div className="button-content">
                         <div className="create">
-                            <button type="submit">
+                            <button type="submit"
+                            onClick={this.complete}
+                            // key={index}
+                            // className={goalList}
+                            data-id={this.state.customerID}>
                                 <strong>CREATE</strong>
                             </button>
 
