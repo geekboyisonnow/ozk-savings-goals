@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Router, Route, Switch } from 'react-router-dom';
 import Header from './Header';
 import Title from './Title';
 import Navigation from './Navigation';
@@ -11,6 +11,11 @@ import Progress from './Progress';
 import Footer from './Footer';
 import Error from './Error';
 import './App.css';
+import axios from 'axios'
+import auth from './auth'
+import history from './history'
+import Logon from './Logon'
+import Logout from './Logout'
 
 class App extends Component {
   constructor(props) {
@@ -18,27 +23,55 @@ class App extends Component {
 
     this.state = null;
   }
+
+  componentWillMount() {
+    if (auth.isAuthenticated()) {
+      axios.defaults.headers.common = {
+        Authorization: auth.authorizationHeader()
+      }
+    }
+  }
+
   render() {
     return (
-      <Router>
-                <>
-                    <div className="header">
-                      <Header />
-                      <Title />
-                    </div>
-                    <div className="body">
-                      <Navigation />
-                      <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/create" component={Create} />
-                        <Route path="/edit" component={Edit} />
-                        <Route path="/progress" component={Progress} />
-                        <Route path="/challenge" component={Challenge} />
-                        <Route component={Error} />
-                      </Switch>
-                      <Footer />
-                    </div>
-                </>
+      <Router history={history}>
+        <>
+          <Route path="/login" render={() => auth.login()} />
+          <Route
+            path="/logout"
+            render={() => {
+              auth.logout()
+              return <></>
+            }}
+          />
+          <Route path="/callback" render={() => {
+            auth.handleAuthentication(() => {
+              // NOTE: Uncomment the following lines if you are using axios
+              //
+              // Set the axios authentication headers
+              axios.defaults.headers.common = {
+                Authorization: auth.authorizationHeader()
+              }
+            })
+            return <></>
+          }} />
+          <div className="header">
+            <Header />
+            <Title />
+          </div>
+          <div className="body">
+            <Navigation />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/create" component={Create} />
+              <Route path="/edit" component={Edit} />
+              <Route path="/progress" component={Progress} />
+              <Route path="/challenge" component={Challenge} />
+              <Route component={Error} />
+            </Switch>
+            <Footer />
+          </div>
+        </>
       </Router>
     );
   }

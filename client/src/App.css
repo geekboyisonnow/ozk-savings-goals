@@ -31,8 +31,7 @@ li {
 }
 
 .nav {
-    max-height: 160px;
-    /* height: 8.9vh; */
+    max-height: 150px;
     background-color: #0f1013;
     color: white;
     font-size: 1.5vw;
@@ -47,14 +46,19 @@ li {
     color: white;
 }
 
+.plain-button {
+    text-decoration: none;
+    color: black;
+}
+
 #nav-bkg {
-    padding: 1.2vw 5.8vw;
+    padding: 1.2vw 3vw;
 }
 
 .hover:hover {
     background-color: #2d8079;
     margin: 0;
-    padding: 1.2vw 5.8vw;
+    padding: 1.2vw 3vw;
 }
 
 .body {

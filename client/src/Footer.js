@@ -1,13 +1,12 @@
-import React, {Component} from 'react';
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { Component } from 'react';
 import './App.css';
 
 class Footer extends Component {
   render() {
     return (
-            <>
-                <footer>Developed by Kenneth Cannon &copy; 2019</footer>
-            </>
+      <>
+        <footer>Developed by Kenneth Cannon &copy; 2019</footer>
+      </>
     );
   }
 }

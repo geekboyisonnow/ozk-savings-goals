@@ -18,10 +18,10 @@ class GoalsController < ApplicationController
   def show
   end
 
-  # GET /goals/new
-  def new
-    @goal = Goal.new
-  end
+  # # GET /goals/new
+  # def new
+  #   @goal = Goal.new
+  # end
 
   # GET /goals/1/edit
   def edit
@@ -30,7 +30,7 @@ class GoalsController < ApplicationController
   # POST /goals
   # POST /goals.json
   def create
-    @goal = Goal.new(goal_params)
+    @goal = Goal.create(goal_params)
 
     respond_to do |format|
       if @goal.save
@@ -75,6 +75,6 @@ class GoalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_params
-      params.require(:goal).permit(:goal_name, :goal_amount, :customer_id)
+      params.require(:goal).permit(:goal_name, :goal_amount, :deposit_amount)
     end
 end
