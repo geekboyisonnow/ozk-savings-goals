@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios'
 import auth from './auth'
 import './App.css'
-// import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 class Create extends Component {
     constructor(props) {
@@ -142,27 +140,6 @@ class Create extends Component {
             })
     }
 
-    // newItemGoalBalance = event => {
-    //     event.preventDefault()
-
-    //     axios
-    //         .post(`/goals/1.json`,
-    //             {
-    //                 item: {
-    //                     text: this.state.newItemText
-    //                 }
-    //             }
-    //         )
-    //         .then(response => {
-    //             console.log(response.date)
-    //             this.reloadAllGoals()
-    //             this.setState({
-    //                 newItemText: ''
-    //             })
-    //         })
-    // }
-
-
     render() {
         return (
 
@@ -268,8 +245,6 @@ class Create extends Component {
                             </div>
                         </form>
                     </div>
-
-
                 </div>
             </div>
 

@@ -14,8 +14,6 @@ import './App.css';
 import axios from 'axios'
 import auth from './auth'
 import history from './history'
-import Logon from './Logon'
-import Logout from './Logout'
 
 class App extends Component {
   constructor(props) {
@@ -41,7 +39,7 @@ class App extends Component {
             path="/logout"
             render={() => {
               auth.logout()
-              return <></>
+              return <>You Have Logged Out!</>
             }}
           />
           <Route path="/callback" render={() => {
