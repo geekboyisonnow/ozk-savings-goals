@@ -14,6 +14,9 @@ import './App.css';
 import axios from 'axios'
 import auth from './auth'
 import history from './history'
+import Login from './login'
+import Logout from './logout'
+
 
 class App extends Component {
   constructor(props) {
@@ -60,6 +63,8 @@ class App extends Component {
           <div className="body">
             <Navigation />
             <Switch>
+              <Route path="/login" component={Login} />
+              <Route path="/logout" component={Logout} />
               <Route exact path="/" component={Home} />
               <Route path="/create" component={Create} />
               <Route path="/edit" component={Edit} />

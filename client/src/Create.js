@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
+import auth from './auth.js'
 import axios from 'axios'
-import auth from './auth'
 import './App.css'
 
 class Create extends Component {
@@ -25,9 +25,9 @@ class Create extends Component {
 
     componentWillMount() {
         if (auth.isAuthenticated()) {
-            axios.defaults.headers.common = {
-                Authorization: auth.authorizationHeader()
-            }
+          axios.defaults.headers.common = {
+            Authorization: auth.authorizationHeader()
+          }
         }
     }
 
@@ -54,7 +54,7 @@ class Create extends Component {
     complete = event => {
         event.preventDefault()
         axios
-            .post(`/goals/${event.target.dataset.goal_id}`,
+            .post(`/goals/${event.target.dataset.goal_id}`, 
                 {
                     item: {
                         complete: true
@@ -119,7 +119,7 @@ class Create extends Component {
                 })
             })
     }
-
+    
     newItemDepositAmount = event => {
         event.preventDefault()
 
@@ -169,8 +169,7 @@ class Create extends Component {
                             </div>
                             <div className="column">
                                 <ul>
-                                    {this.state.goals.map
-                                        ((goal, index) => {
+                                    {this.state.goals.map((goal, index) => {
                                             const goalList = goal.complete ? 'complete' : ''
                                             return (
                                                 <li
@@ -183,13 +182,13 @@ class Create extends Component {
                                                     {goal.text.goal_amount}
                                                     {goal.text.deposit_amount}
                                                     {this.state.newItemText.deposit_amount}
-                                                </li>
+                                                    </li>
                                             )
                                         })}
                                 </ul>
                             </div>
                             <div className="column">
-
+                            
                                 <input
                                     type="text"
                                     id="name"
@@ -198,7 +197,7 @@ class Create extends Component {
                                     placeholder={this.state.newItemText.goal_name}
                                     onChange={this.changeText}
                                 />
-
+                                
                                 <input
                                     type="money"
                                     id="target"
@@ -207,7 +206,7 @@ class Create extends Component {
                                     placeholder={this.state.newItemText.goal_amount}
                                     onChange={this.changeText}
                                 />
-
+                                
                                 <input
                                     type="money"
                                     id="current"
@@ -224,27 +223,29 @@ class Create extends Component {
                                     // placeholder={newItemGoalBalance}
                                     onChange={this.changeText}
                                 />
-
+                                
                             </div>
-                        </form>
-                        <form onSubmit={this.newItem} >
+                            </form>
+                            <form onSubmit={this.newItem} >
                             <div className="button-content">
-                                <div className="create">
-                                    <button type="submit"
-                                        onClick={this.complete}
-                                        // key={index}
-                                        // className={goalList}
-                                        data-id={this.state.customerID}>
-                                        <strong>CREATE</strong>
-                                    </button>
+                        <div className="create">
+                            <button type="submit"
+                            onClick={this.complete}
+                            // key={index}
+                            // className={goalList}
+                            data-id={this.state.customerID}>
+                                <strong>CREATE</strong>
+                            </button>
 
-                                    <section>
-                                        Click HERE to Create Your New Goal!
+                            <section>
+                                Click HERE to Create Your New Goal!
                             </section>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
+                    </form>
+                    </div>
+
+                    
                 </div>
             </div>
 
