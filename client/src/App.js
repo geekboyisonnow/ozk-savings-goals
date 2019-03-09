@@ -14,16 +14,10 @@ import './App.css';
 import axios from 'axios'
 import auth from './auth'
 import history from './history'
-import Login from './login'
-import Logout from './logout'
+import Log from './Log'
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = null;
-  }
 
   componentWillMount() {
     if (auth.isAuthenticated()) {
@@ -34,15 +28,25 @@ class App extends Component {
   }
 
   render() {
+    console.log('Is the user authenticated', auth.isAuthenticated())
+    
     return (
       <Router history={history}>
-        <>
-          <Route path="/login" render={() => auth.login()} />
+         <>
+         <div className="header">
+            <Header />
+            <Title />
+          </div>
+          <div className="body">
+                 
+            <Navigation />
+            <Switch>
+            <Route path="/login" render={() => auth.login()} />
           <Route
             path="/logout"
             render={() => {
               auth.logout()
-              return <>You Have Logged Out!</>
+              return <></>
             }}
           />
           <Route path="/callback" render={() => {
@@ -55,17 +59,9 @@ class App extends Component {
               }
             })
             return <></>
-          }} />
-          <div className="header">
-            <Header />
-            <Title />
-          </div>
-          <div className="body">
-            <Navigation />
-            <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/logout" component={Logout} />
-              <Route exact path="/" component={Home} />
+          }} />   
+            <Route path="/" component={Log} />
+              <Route path="/home" component={Home} />
               <Route path="/create" component={Create} />
               <Route path="/edit" component={Edit} />
               <Route path="/progress" component={Progress} />

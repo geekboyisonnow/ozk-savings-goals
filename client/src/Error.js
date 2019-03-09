@@ -3,11 +3,6 @@ import plant from './plant.jpg';
 import './App.css';
 
 class Error extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = true;
-  }
 
   render() {
     return (
