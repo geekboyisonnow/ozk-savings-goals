@@ -37,9 +37,9 @@ class Auth {
         if (callback) {
           callback()
         }
-        history.replace('/')
+        history.replace('/home')
       } else if (err) {
-        history.replace('/')
+        history.replace('/log')
         console.log(err)
       }
     })

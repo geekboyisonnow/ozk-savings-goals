@@ -266,6 +266,18 @@ class Edit extends Component {
                               className="button-label"
                             >
                               <button type="edit">
+                                <strong>DELETE</strong>
+                              </button>
+                              <section>WARNING!!!</section>
+                              </div>
+                              </div>
+                          <div className="button-column">
+                            <div
+                              class="button"
+                              classId="submit"
+                              className="button-label"
+                            >
+                              <button type="edit">
                                 <strong>NEXT</strong>
                               </button>
                             </div>

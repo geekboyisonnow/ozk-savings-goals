@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import auth from './auth.js'
 import axios from 'axios'
 import './App.css'
 
@@ -21,14 +20,6 @@ class Create extends Component {
                     goals: Response.data
                 })
             })
-    }
-
-    componentWillMount() {
-        if (auth.isAuthenticated()) {
-          axios.defaults.headers.common = {
-            Authorization: auth.authorizationHeader()
-          }
-        }
     }
 
     componentDidMount = () => {

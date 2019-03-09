@@ -11,55 +11,57 @@ import Progress from './Progress';
 import Footer from './Footer';
 import Error from './Error';
 import './App.css';
-import axios from 'axios'
-import auth from './auth'
+import Auth from './auth'
 import history from './history'
 import Log from './Log'
+import axios from 'axios'
 
+const auth = new Auth()
 
 class App extends Component {
 
   componentWillMount() {
     if (auth.isAuthenticated()) {
-      axios.defaults.headers.common = {
-        Authorization: auth.authorizationHeader()
-      }
+          axios.defaults.headers.common = {
+            Authorization: auth.authorizationHeader()
+          }
     }
   }
 
   render() {
-    console.log('Is the user authenticated', auth.isAuthenticated())
     
+    console.log('Is the user authenticated', auth.isAuthenticated())
+
     return (
       <Router history={history}>
-         <>
          <div className="header">
             <Header />
             <Title />
           </div>
-          <div className="body">
-                 
-            <Navigation />
+     
+    <Navigation />
+    <div className="body">
             <Switch>
-            <Route path="/login" render={() => auth.login()} />
-          <Route
-            path="/logout"
-            render={() => {
-              auth.logout()
-              return <></>
-            }}
-          />
-          <Route path="/callback" render={() => {
-            auth.handleAuthentication(() => {
-              // NOTE: Uncomment the following lines if you are using axios
-              //
-              // Set the axios authentication headers
-              axios.defaults.headers.common = {
-                Authorization: auth.authorizationHeader()
-              }
-            })
-            return <></>
-          }} />   
+            
+      <Route path="/login" render={() => auth.login()} />
+    <Route
+      path="/logout"
+      render={() => {
+        auth.logout()
+        return <></>
+      }}
+    />
+    <Route path="/callback" render={() => {
+      auth.handleAuthentication(() => {
+        // NOTE: Uncomment the following lines if you are using axios
+        //
+        // Set the axios authentication headers
+        axios.defaults.headers.common = {
+          Authorization: auth.authorizationHeader()
+        }
+      })
+      return <></>
+    }} />
             <Route path="/" component={Log} />
               <Route path="/home" component={Home} />
               <Route path="/create" component={Create} />
@@ -70,7 +72,7 @@ class App extends Component {
             </Switch>
             <Footer />
           </div>
-        </>
+        
       </Router>
     );
   }
