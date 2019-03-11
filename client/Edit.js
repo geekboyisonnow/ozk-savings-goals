@@ -12,7 +12,7 @@ class Edit extends Component {
                       <section />
                     </div>
                     <div>
-                      <div className="row" id="progress">
+                      <div className="row" classId="progress">
                         <div className="input-column">
                           <label for="name" className="label">
                             <strong>Your Goal Name:</strong>

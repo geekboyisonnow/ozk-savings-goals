@@ -2,18 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import plant from './plant.jpg';
 import './App.css';
-
+// import Auth from './auth'
 
 class Log extends Component {
 
   
-  // componentWillMount() {
-  //   // Guard Clause
-  //   if (!auth.isAuthenticated()) {
-  //     history.replace('/log')
-  //   }
-  // }
-
   render() {
     
     return (
