@@ -31,6 +31,7 @@ class GoalsController < ApplicationController
   # POST /goals.json
   def create
     @goal = Goal.create(goal_params)
+    @goal.customer = current_user.customer
 
     respond_to do |format|
       if @goal.save
