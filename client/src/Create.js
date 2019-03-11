@@ -39,6 +39,7 @@ class Create extends Component {
 
         axios.post(`/goals.json`, formData).then(response => {
             form.reset()
+            this.reloadAllGoals()
         })
     }
 

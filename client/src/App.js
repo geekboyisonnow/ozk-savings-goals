@@ -22,17 +22,17 @@ import history from './history'
 
 class App extends Component {
 
-  // componentWillMount() {
-  //   if (auth.isAuthenticated()) {
-  //     axios.defaults.headers.common = {
-  //       Authorization: auth.authorizationHeader()
-  //     } 
-  //   } else {
-  //     if (!auth.isAuthenticated()) {
-  //     history.replace('/home')
-  //     }
-  //   }
-  // }
+  componentWillMount() {
+    if (auth.isAuthenticated()) {
+      axios.defaults.headers.common = {
+        Authorization: auth.authorizationHeader()
+      } 
+    } else {
+      if (!auth.isAuthenticated()) {
+        history.replace('/home')
+      }
+    }
+  }
 
   render() {
 

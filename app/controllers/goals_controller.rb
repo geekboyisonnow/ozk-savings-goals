@@ -7,9 +7,9 @@ class GoalsController < ApplicationController
     filter = params[:filter]
 
     if filter
-      @goals = Goal.all.order(@goal).where("@goal like ?", "%#{filter}%")
+      @goals = current_customer.goals.order(@goal).where("@goal like ?", "%#{filter}%")
     else
-      @goals = Goal.all.order(@goal)
+      @goals = current_customer.goals.order(@goal)
     end
   end
 
@@ -30,8 +30,7 @@ class GoalsController < ApplicationController
   # POST /goals
   # POST /goals.json
   def create
-    @goal = Goal.create(goal_params)
-    @goal.customer = current_user.customer
+    @goal = current_customer.goals.create(goal_params)
 
     respond_to do |format|
       if @goal.save
@@ -71,7 +70,7 @@ class GoalsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal
-      @goal = Goal.find(params[:id])
+      @goal = current_user.goals.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
