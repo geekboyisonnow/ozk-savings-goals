@@ -7,11 +7,17 @@ class Progress extends Component {
   constructor(props) {
     super(props)
 
-    // this.state = {
-    //   customer_id: 1,      
-    //   goals: this.props.goals
-    // }
+    this.state = {
+      customer_id: 1,      
+      goals: props.goals
+    }
   }
+
+  setGoals = () => {
+      this.setState({
+        goals: this.props.goals
+    })
+    }
 
   // arrayLength = (array) => {
 
@@ -53,6 +59,7 @@ class Progress extends Component {
                     <div className="input-label">
                       {goal.goal_name}
                     </div>
+                    )}
                     )}
                   </div>
 

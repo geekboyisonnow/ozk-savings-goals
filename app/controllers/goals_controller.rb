@@ -31,7 +31,7 @@ class GoalsController < ApplicationController
   # POST /goals
   # POST /goals.json
   def create
-    @goal = current_customer.goals.create(goal_params)
+    @goal = current_customer.goals.create!(goal_params)
 
     respond_to do |format|
       if @goal.save
@@ -71,11 +71,11 @@ class GoalsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal
-      @goal = current_customer.goals.find(params[:customer_id])
+      @goal = Goal.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_params
-      params.require(:goal).permit(:goal_name, :goal_amount, :deposit_amount, :current_customer, :customer_id)
+      params.require(:goal).permit(:goal_name, :goal_amount, :deposit_amount, :current_customer, :customer_id, :customer_name)
     end
 end
