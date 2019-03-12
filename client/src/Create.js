@@ -19,6 +19,7 @@ class Create extends Component {
         axios
             .get(`/goals.json`)
             .then(response => {
+                console.log(response.data)
                 this.setState({
                     goals: response.data
                 })
@@ -200,32 +201,24 @@ class Create extends Component {
                                 onChange={this.changeText}
                             />
 
-                            <div className="container">
-                              <div className="skills css">100%</div> 
-                            </div>
-                        </div>
-                            <div className="column">
-                                <div>
-                                    {this.state.goals.map((goal, index) => {
-                                            const goalList = goal.complete ? 'complete' : ''
-                                            return (
-                                                // <li onClick={this.complete}
-                                                // key={index}
-                                                // className={goalList}
-                                                // data-id={goal.goal_id}>
-
-                                                <div className="column">
-                                                    {/* {goal.goal_name} */}
-                                                    {this.goal_amount}
-                                                    {/* {goal.deposit_amount} */}
-                                                    {/* {this.setState.progress_value} */}
-                                                    {/* </li> */}
-                                                </div>
-                                            )
-                                        })}
+                                <div className="container">
+                                    <div className="skills css">100%</div> 
                                 </div>
                             </div>
+                        <div className="column">
+                            <div>INFO</div>
+                            <div>INFO</div>
+                            <div>INFO</div>
+                            <div>INFO</div>
+                                {/* {this.state.goals.slice(0,4).map(goal => 
+                            <div className="input-label" >
+                                {this.goals.goal_name}
+                                {this.goals.goal_amount}
+                                {this.goals.deposit_amount}
                             </div>
+                            )} */}
+                        </div>
+                        </div>
                     <div className="button-content">
                         <div className="create">
                             <section>
@@ -238,12 +231,10 @@ class Create extends Component {
                                 <strong>CREATE</strong>
                             </button>
                         </div>
-                    </div>
                     
-
-
-                </div>
-            </div>
+                    </div>
+                    </div>
+                    </div>
             </form>
 
         )

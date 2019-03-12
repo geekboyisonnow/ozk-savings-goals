@@ -8,7 +8,7 @@ class Header extends Component {
     return (
             <>
                 <header>
-                  <Link to="/" className="plain">
+                  <Link to="/home" className="plain">
                     <img
                       align="bottom"
                       src={logo}

@@ -10,7 +10,7 @@ import Edit from './Edit';
 import Create from './Create';
 import Progress from './Progress';
 import Footer from './Footer';
-import Error from './Error';
+// import Error from './Error';
 import './App.css';
 // import auth from './auth'
 
@@ -21,6 +21,22 @@ import auth from './auth'
 import history from './history'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      goals: []
+    }
+  }
+
+  componentDidMount() {
+    axios.get('/goals.json').then(response => {
+      console.log(response.data)
+      this.setState({
+        goals: response.data
+      })
+    })
+  }
 
   componentWillMount() {
     if (auth.isAuthenticated()) {

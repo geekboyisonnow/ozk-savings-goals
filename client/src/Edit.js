@@ -252,7 +252,68 @@ progressValue = (progress_value) => {
                         </div>
                         <div className="input-column">
                           <label for="name" className="label">
-                            <strong>Current Balance:</strong>
+                            <strong>Deposit Amount:</strong>
+                          </label>
+
+                          <input
+                            type="number"
+                            min="0.01"
+                            step="0.01"
+                            max=""
+                            value="$100,000.00"
+                            id="target"
+                            name="target_amount"
+                            className="label"
+                            placeholder="$100,000.00"
+                          />
+                          <input
+                            type="number"
+                            min="0.01"
+                            step="0.01"
+                            max=""
+                            value="$2,000.00"
+                            id="target"
+                            name="target_amount"
+                            className="label"
+                            placeholder="$2,000.00"
+                          />
+                          <input
+                            type="number"
+                            min="0.01"
+                            step="0.01"
+                            max=""
+                            value="$1,000.00"
+                            id="target"
+                            name="target_amount"
+                            className="label"
+                            placeholder="$1,000.00"
+                          />
+                          <input
+                            type="number"
+                            min="0.01"
+                            step="0.01"
+                            max=""
+                            value="$10,000.00"
+                            id="target"
+                            name="target_amount"
+                            className="label"
+                            placeholder="$10,000.00"
+                          />
+                          <input
+                            type="number"
+                            min="0.01"
+                            step="0.01"
+                            max=""
+                            value="$4,000,000.00"
+                            id="target"
+                            name="target_amount"
+                            className="label"
+                            placeholder="$4,000,000.00"
+                          />
+                        </div>
+                        <div className="input-column">
+                          <label for="name" className="label">
+                            <strong>Balance:</strong>
                           </label>
 
                           {/* <div>{this.state.goals.map((goal, index) => {
