@@ -5,11 +5,12 @@ class GoalsController < ApplicationController
   # GET /goals.json
   def index
     filter = params[:filter]
+    @goals = Goal.all
 
     if filter
-      @goals = current_customer.goals.order(@goal).where("@goal like ?", "%#{filter}%")
+      @goals = Goal.all.order(:customer_id).where("customer_id ?", "%#{filter}%")
     else
-      @goals = current_customer.goals.order(@goal)
+      @goals = Goal.all.order(:customer_id)
     end
   end
 
@@ -70,11 +71,11 @@ class GoalsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal
-      @goal = current_user.goals.find(params[:id])
+      @goal = current_customer.goals.find(params[:customer_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_params
-      params.require(:goal).permit(:goal_name, :goal_amount, :deposit_amount)
+      params.require(:goal).permit(:goal_name, :goal_amount, :deposit_amount, :current_customer, :customer_id)
     end
 end

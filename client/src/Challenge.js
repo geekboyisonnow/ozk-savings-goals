@@ -26,48 +26,36 @@ class Challenge extends Component {
                   <div className="row">
                     <div className="column">
                       <label for="name" className="label">
-                                Goal:
+                      Amount:
                       </label>
                       <label for="target" className="label">
-                                Amount:
+                      Deposit:         
                       </label>
                       <label for="current" className="label">
-                                Balance:
+                      Progress:        
                       </label>
                       <label for="date" className="label">
-                                Date:
+                      Competion:        
                       </label>
                     </div>
-                    <div className="column">
-                      <div
-                        type="text"
-                        id="name"
-                        name="goal_name"
-                        className="label"
-                      >
-                                Rainy Day Challenge
-                      </div>
+                    <div className="input-column">
                       <input
                         type="text"
                         id="target"
                         name="target_amount"
-                        className="challenge-label"
+                        className="label"
                       />
-                      <div
+                      <input
                         type="text"
                         id="current"
                         name="current_amount"
                         className="label"
-                      >
-                                $900.00
+                      />
+                      <div className="container">
+                        <div className="skills css">100%</div> 
                       </div>
-                      <div
-                        type="date"
-                        id="date"
-                        name="target_date"
-                        className="label"
-                      >
-                                12/31/2019
+                      <div className="container">
+                        <div className="skills css">100%</div> 
                       </div>
                     </div>
                   </div>
