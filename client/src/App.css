@@ -8,6 +8,34 @@ header {
     background-color: white;
 }
 
+/* Make sure that padding behaves as expected */
+* {box-sizing:border-box}
+
+/* Container for skill bars */
+.container {
+    height: 2vh;
+    width: 10vw;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.skills {
+    font-size: 2.2vh;
+  text-align: right; /* Right-align text */
+  padding-right: 5px; /* Add some padding */
+  color: white; /* White text color */
+}
+
+
+.css {
+    margin-right: 10px;
+    height: 3.5vh;
+    width: 10vw; 
+    background-color:#e40046;
+    border: 1px solid darkred;
+}
+
+
 li {
     list-style: none;
 }

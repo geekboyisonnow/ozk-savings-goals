@@ -28,5 +28,20 @@
   "repository": "yes",
   "author": "yes",
   "license": "yes",
-  "proxy": "http://localhost:3000"
+  "proxy": "http://localhost:3000",
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": false,
+      "overrides": [
+        {
+          "files": "*.test.js",
+          "options": {
+            "semi": true
+          }
+        }
+      ],
+    "singleQuote": true
+    
+  }
 }

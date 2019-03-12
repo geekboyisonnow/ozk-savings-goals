@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import './App.css'
 
+
+
 class Create extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             goals: [],
-            newItemText: ''
+            newItemText: '',
+            progress_value: 0
         }
     }
 
@@ -132,6 +135,14 @@ class Create extends Component {
             })
     }
 
+    
+    progressValue = (progress_value) => {
+        progress_value = 0
+        this.setState({
+            progress_value: this.state.newItemText.goal_amount / this.state.newItemText.deposit_amount
+        })
+    }
+
     render() {
         return (
             <form onSubmit={this.createGoal} action="/new" method="post" className="row">
@@ -145,7 +156,7 @@ class Create extends Component {
                         goals for tomorrow.
                         </section>
 
-                    <div className="column">
+                    <div className="row">
                             <div className="column">
                                 <label htmlFor="name" className="label">
                                     Goal Name:
@@ -157,83 +168,78 @@ class Create extends Component {
                                     Deposit Amount:
                                     </label>
                                 <label htmlFor="date" className="label">
-                                    Balance:
+                                    Current Progress:
                                     </label>
                             </div>
                             <div className="column">
-                                <ul>
+                            
+                            <input
+                                type="text"
+                                id="name"
+                                name="goal[goal_name]"
+                                className="input-label"
+                                placeholder={this.state.newItemText.goal_name}
+                                onChange={this.changeText}
+                            />
+                            
+                            <input
+                                type="money"
+                                id="target"
+                                name="goal[goal_amount]"
+                                className="input-label"
+                                placeholder={this.state.newItemText.goal_amount}
+                                onChange={this.changeText}
+                            />
+                            
+                            <input
+                                type="money"
+                                id="current"
+                                name="deposit[deposit_amount]"
+                                className="input-label"
+                                placeholder={this.state.newItemText.deposit_amount}
+                                onChange={this.changeText}
+                            />
+
+                            <div className="container">
+                              <div className="skills css">100%</div> 
+                            </div>
+                        </div>
+                            <div className="column">
+                                <div>
                                     {this.state.goals.map((goal, index) => {
                                             const goalList = goal.complete ? 'complete' : ''
                                             return (
-                                                <li
-                                                    onClick={this.complete}
-                                                    key={index}
-                                                    className={goalList}
-                                                    data-id={goal.goal_id}
-                                                >
-                                                    {goal.goal_name}
-                                                    {goal.goal_amount}
-                                                    {goal.deposit_amount}
-                                                    {this.state.newItemText.deposit_amount}
-                                                    </li>
+                                                // <li onClick={this.complete}
+                                                // key={index}
+                                                // className={goalList}
+                                                // data-id={goal.goal_id}>
+
+                                                <div className="column">
+                                                    {/* {goal.goal_name} */}
+                                                    {this.goal_amount}
+                                                    {/* {goal.deposit_amount} */}
+                                                    {/* {this.setState.progress_value} */}
+                                                    {/* </li> */}
+                                                </div>
                                             )
                                         })}
-                                </ul>
+                                </div>
                             </div>
-                            <div className="column">
-                            
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="goal[goal_name]"
-                                    className="input-label"
-                                    placeholder={this.state.newItemText.goal_name}
-                                    onChange={this.changeText}
-                                />
-                                
-                                <input
-                                    type="money"
-                                    id="target"
-                                    name="goal[goal_amount]"
-                                    className="input-label"
-                                    placeholder={this.state.newItemText.goal_amount}
-                                    onChange={this.changeText}
-                                />
-                                
-                                <input
-                                    type="money"
-                                    id="current"
-                                    name="deposit[deposit_amount]"
-                                    className="input-label"
-                                    placeholder={this.state.newItemText.deposit_amount}
-                                    onChange={this.changeText}
-                                />
-                                <input
-                                    type="money"
-                                    id="date"
-                                    name="deposit.balance"
-                                    className="input-label"
-                                    // placeholder={newItemGoalBalance}
-                                    onChange={this.changeText}
-                                />
-                                
                             </div>
-
-                            <div className="button-content">
+                    <div className="button-content">
                         <div className="create">
+                            <section>
+                                Click HERE to Create Your New Goal!
+                            </section>
                             <button type="submit"
                             // key={index}
                             // className={goalList}
                             data-id={this.state.customerID}>
                                 <strong>CREATE</strong>
                             </button>
-
-                            <section>
-                                Click HERE to Create Your New Goal!
-                            </section>
                         </div>
                     </div>
-                    </div>
+                    
 
 
                 </div>
