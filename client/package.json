@@ -6,8 +6,10 @@
     "auth0-js": "^9.10.0",
     "axios": "^0.18.0",
     "deploy": "^1.0.3",
-    "react": "^16.8.3",
+    "history": "^4.7.2",
+    "react": "16.8.3",
     "react-dom": "^16.8.3",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.8"
   },
@@ -28,12 +30,5 @@
   "repository": "yes",
   "author": "yes",
   "license": "yes",
-  "proxy": "http://localhost:3000",
-  "prettier": {
-    "trailingComma": "es5",
-  "tabWidth": 4,
-  "semi": false,
-  "singleQuote": true
-  }
+  "proxy": "http://localhost:3000"
 }
-

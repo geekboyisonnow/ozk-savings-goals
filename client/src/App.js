@@ -21,22 +21,6 @@ import auth from './auth'
 import history from './history'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      goals: []
-    }
-  }
-
-  componentDidMount() {
-    axios.get('/goals.json').then(response => {
-      console.log(response.data)
-      this.setState({
-        goals: response.data
-      })
-    })
-  }
 
   componentWillMount() {
     if (auth.isAuthenticated()) {
@@ -65,7 +49,11 @@ class App extends Component {
         <div className="body">
         <Navigation /> 
         
-        <Route path="/login" render={() => auth.login()} />
+        <Route path="/login" render={() => {
+          auth.login()
+          return <></>
+          }}
+          />
         <Route path="/logout" render={() => {
                 auth.logout()
                 return <></>

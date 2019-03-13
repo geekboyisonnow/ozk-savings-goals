@@ -3,11 +3,7 @@ import plant from './plant.jpg';
 import './App.css';
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = null;
-  }
 
   render() {
     return (

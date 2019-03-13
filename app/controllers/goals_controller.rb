@@ -31,7 +31,7 @@ class GoalsController < ApplicationController
   # POST /goals
   # POST /goals.json
   def create
-    @goal = current_customer.goals.create!(goal_params)
+    @goal = current_customer.goals.create(goal_params)
 
     respond_to do |format|
       if @goal.save
@@ -76,6 +76,6 @@ class GoalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_params
-      params.require(:goal).permit(:goal_name, :goal_amount, :deposit_amount, :current_customer, :customer_id, :customer_name)
+      params.require(:goal).permit(:goal_name, :goal_amount, :deposit_amount, :current_customer, :customer_id)
     end
 end

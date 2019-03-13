@@ -5,6 +5,9 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     filter = params[:filter]
+    
+    # @customer = Customer.all
+    # customer = current_customer
 
     if filter
       @customers = Customer.all.order(:customer_name).where("customer_name ?", "%#{filter}%")

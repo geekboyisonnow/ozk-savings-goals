@@ -210,11 +210,11 @@ class Create extends Component {
                             <div>INFO</div>
                             <div>INFO</div>
                             <div>INFO</div>
-                                {/* {this.state.goals.slice(0,4).map(goal => 
+                                {/* {this.props.goals.map(goal => 
                             <div className="input-label" >
-                                {this.goals.goal_name}
-                                {this.goals.goal_amount}
-                                {this.goals.deposit_amount}
+                                {this.goal_name}
+                                {this.state.newItemText.goal_amount}
+                                {this.state.newItemText.deposit_amount}
                             </div>
                             )} */}
                         </div>

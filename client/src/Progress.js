@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios'
+// import axios from 'axios'
 
 
 class Progress extends Component {
@@ -17,7 +17,7 @@ class Progress extends Component {
       this.setState({
         goals: this.props.goals
     })
-    }
+  }
 
   // arrayLength = (array) => {
 
@@ -242,7 +242,7 @@ class Progress extends Component {
                             <div className="container">
                               <div className="skills css">100%</div> 
                             </div>
-                </div>
+                  </div>
               </div>
             </div>
           </div>
