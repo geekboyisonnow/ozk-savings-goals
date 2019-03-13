@@ -53,7 +53,7 @@ class Progress extends Component {
                 <label htmlFor="name" className="input-label">
                   <strong>Goal:</strong>
                 </label>
-                  <div>
+                  {/* <div>
                     {this.props.goals.slice(0,5).map(goal => {
                       return (
                     <div className="input-label">
@@ -61,7 +61,7 @@ class Progress extends Component {
                     </div>
                     )}
                     )}
-                  </div>
+                  </div> */}
 
 
 
@@ -113,11 +113,11 @@ class Progress extends Component {
                   <strong>Amount:</strong>
                 </label>
 
-                <div>
+                {/* <div>
                     {this.state.goals.slice(0,5).map(goal => <div className="input-label">$
                       {goal.goal_amount}
                     </div>)}
-                  </div>
+                  </div> */}
 
                 {/* <div>
                     {this.state.goals.slice(0,5).map(goal => <div className="input-label">

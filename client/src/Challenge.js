@@ -35,7 +35,7 @@ class Challenge extends Component {
                       Progress:        
                       </label>
                       <label for="date" className="label">
-                      Competion:        
+                      Competition:        
                       </label>
                     </div>
                     <div className="input-column">

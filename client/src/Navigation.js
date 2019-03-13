@@ -5,6 +5,15 @@ import auth from './auth';
 
 
 class Navigation extends Component {
+
+
+  handleButtonChange(value) {
+    this.setState({
+        Authorization: value
+    });
+  }
+
+
   loginOrLogout = () => {
     if (auth.isAuthenticated()) {
       return <Link to="/logout" className="plain">
@@ -20,6 +29,7 @@ class Navigation extends Component {
      </Link>
     }
   }
+
   render() {
     return (
       <>

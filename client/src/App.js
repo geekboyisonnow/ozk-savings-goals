@@ -10,11 +10,11 @@ import Edit from './Edit';
 import Create from './Create';
 import Progress from './Progress';
 import Footer from './Footer';
+import Log from './Log'
 // import Error from './Error';
 import './App.css';
-// import auth from './auth'
 
-import Log from './Log'
+
 import axios from 'axios'
 
 import auth from './auth'
@@ -27,12 +27,14 @@ class App extends Component {
       axios.defaults.headers.common = {
         Authorization: auth.authorizationHeader()
       } 
-    } else {
-      if (!auth.isAuthenticated()) {
-        history.replace('/home')
-      }
-    }
+    } 
+    // else {
+    //   if (!auth.isAuthenticated()) {
+    //     history.replace('/home')
+    //   }
+    // }
   }
+
 
   render() {
 
@@ -52,8 +54,8 @@ class App extends Component {
         <Route path="/login" render={() => {
           auth.login()
           return <></>
-          }}
-          />
+        }}
+      />
         <Route path="/logout" render={() => {
                 auth.logout()
                 return <></>
