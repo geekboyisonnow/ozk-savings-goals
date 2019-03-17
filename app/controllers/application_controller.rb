@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-   skip_before_action :verify_authenticity_token
+  #  skip_before_action :verify_authenticity_token
     
     private
     def current_customer
@@ -11,5 +11,4 @@ class ApplicationController < ActionController::Base
     rescue JWT::VerificationError, JWT::DecodeError
       nil
     end
-
 end

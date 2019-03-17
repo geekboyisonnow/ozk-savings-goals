@@ -17,5 +17,10 @@ module FinalOzkTest
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+    # config.api_only = true
+    config.action_dispatch.default_headers = {
+      'Access-Control-Allow-Origin' => 'http://localhost:3001',
+      'Access-Control-Request-Method' => %w{GET POST PUT OPTIONS}.join(",")
+    }
   end
 end

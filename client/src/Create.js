@@ -41,7 +41,7 @@ class Create extends Component {
         let form = event.target
         let formData = new FormData(event.target)
 
-        axios.post(`/goals.json`, formData).then(response => {
+        axios.post(`http://localhost:3000/goals.json`, formData).then(response => {
             form.reset()
             this.reloadAllGoals()
         })
@@ -50,7 +50,7 @@ class Create extends Component {
     complete = event => {
         event.preventDefault()
         axios
-            .post(`/goals/${event.target.dataset.goal_id}`, 
+            .post(`/goals/${event.target.dataset.goal_id}`,
                 {
                     item: {
                         complete: true
@@ -115,7 +115,7 @@ class Create extends Component {
                 })
             })
     }
-    
+
     newItemDepositAmount = event => {
         event.preventDefault()
 
@@ -136,7 +136,7 @@ class Create extends Component {
             })
     }
 
-    
+
     progressValue = (progress_value) => {
         progress_value = 0
         this.setState({
@@ -148,16 +148,16 @@ class Create extends Component {
         return (
             <form onSubmit={this.createGoal} action="/new" method="post" className="row">
 
-            <div className="body">
-                <div className="content">
+                <div className="body">
+                    <div className="content">
 
-                    <h2>Create A New Savings Goals</h2>
-                    <section>
-                        Bank OZK helps you save today to meet your financial
-                        goals for tomorrow.
+                        <h2>Create A New Savings Goals</h2>
+                        <section>
+                            Bank OZK helps you save today to meet your financial
+                            goals for tomorrow.
                         </section>
 
-                    <div className="row">
+                        <div className="row">
                             <div className="column">
                                 <label htmlFor="name" className="label">
                                     Goal Name:
@@ -173,43 +173,39 @@ class Create extends Component {
                                     </label>
                             </div>
                             <div className="column">
-                            
-                            <input
-                                type="text"
-                                id="name"
-                                name="goal[goal_name]"
-                                className="input-label"
-                                placeholder={this.state.newItemText.goal_name}
-                                onChange={this.changeText}
-                            />
-                            
-                            <input
-                                type="money"
-                                id="target"
-                                name="goal[goal_amount]"
-                                className="input-label"
-                                placeholder={this.state.newItemText.goal_amount}
-                                onChange={this.changeText}
-                            />
-                            
-                            <input
-                                type="money"
-                                id="current"
-                                name="deposit[deposit_amount]"
-                                className="input-label"
-                                placeholder={this.state.newItemText.deposit_amount}
-                                onChange={this.changeText}
-                            />
+
+                                <input
+                                    type="text"
+                                    name="goal[goal_name]"
+                                    className="input-label"
+                                    placeholder="Your Goal Name"
+                                // onChange={this.changeText}
+                                />
+
+                                <input
+                                    type="money"
+                                    name="goal[goal_amount]"
+                                    className="input-label"
+                                    placeholder="Your Goal Amount"
+                                // onChange={this.changeText}
+                                />
+
+                                <input
+                                    type="money"
+                                    name="deposit[deposit_amount]"
+                                    className="input-label"
+                                    placeholder="The Deposit Amount"
+                                // onChange={this.changeText}
+                                />
 
                                 <div className="container">
-                                    <div className="skills css">100%</div> 
+                                    <div className="skills css">100%</div>
                                 </div>
                             </div>
-                        <div className="column">
-                            <div>INFO</div>
-                            <div>INFO</div>
-                            <div>INFO</div>
-                            <div>INFO</div>
+                            <div className="column">
+                                <div>
+                                    {this.createGoal.goal_name}
+                                </div>
                                 {/* {this.props.goals.map(goal => 
                             <div className="input-label" >
                                 {this.goal_name}
@@ -217,24 +213,25 @@ class Create extends Component {
                                 {this.state.newItemText.deposit_amount}
                             </div>
                             )} */}
+                            </div>
                         </div>
-                        </div>
-                    <div className="button-content">
-                        <div className="create">
-                            <section>
-                                Click HERE to Create Your New Goal!
+                        <div className="button-content">
+                            <div className="create">
+                                <section>
+                                    Click HERE to Create Your New Goal!
                             </section>
-                            <button type="submit"
-                            // key={index}
-                            // className={goalList}
-                            data-id={this.state.customerID}>
-                                <strong>CREATE</strong>
-                            </button>
+                                <button type="submit"
+                                // key={index}
+                                // className={goalList}
+                                // data-id={this.state.customerID}
+                                >
+                                    <strong>CREATE</strong>
+                                </button>
+                            </div>
+
                         </div>
-                    
                     </div>
-                    </div>
-                    </div>
+                </div>
             </form>
 
         )

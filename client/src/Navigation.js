@@ -9,7 +9,7 @@ class Navigation extends Component {
 
   handleButtonChange(value) {
     this.setState({
-        Authorization: value
+      Authorization: value
     });
   }
 
@@ -20,13 +20,13 @@ class Navigation extends Component {
         <div className="hover" id="nav-bkg">
           Logout
         </div>
-     </Link>
+      </Link>
     } else {
       return <Link to="/login" className="plain">
         <div className="hover" id="nav-bkg">
           Login
         </div>
-     </Link>
+      </Link>
     }
   }
 

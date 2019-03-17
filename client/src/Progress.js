@@ -1,22 +1,95 @@
 import React, { Component } from 'react';
 import './App.css';
-// import axios from 'axios'
+import axios from 'axios'
 
+class Goal {
+  constructor(rawGoalData) {
+    this.goalName = rawGoalData.goal_name
+    this.goalAmount = rawGoalData.goal_amount
+
+  }
+
+  name() {
+    return this.goalName
+  }
+
+  targetAmount() {
+    return this.goalAmount
+  }
+
+  // description() {
+  //   return `${this.characterName} has been in ${this.filmCount} films`
+  // }
+}
 
 class Progress extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      customer_id: 1,      
-      goals: props.goals
+      page: 1,
+      customer_id: 8,
+      goals: [],
+      loading: false
     }
   }
 
-  setGoals = () => {
-      this.setState({
-        goals: this.props.goals
-    })
+  componentDidMount = () => {
+    this.getAllGoals()
+  }
+
+  getAllGoals = () => {
+    this.setState({ loading: true })
+
+    axios
+      .get(`http://localhost:3000/goals/8.json`, { headers: { 'Access-Control-Allow-Origin': '*' } })
+      //   {},
+      //   {
+      //     headers: {
+      //       Authorization: auth.authorizationHeader()
+      //     }
+      //   }
+      // )
+      // .get(`http://localhost:3000/goals/${this.state.id}`)
+      // .get(`/customers/${this.customer_id}.json`)
+      // .get(`/goals/?page=${this.state.page}.json`)
+      // .then(response => response.json())
+
+      .then(rawData => {
+        let goals = rawData.goals.map(rawGoalData => {
+          let newGoal = new Goal(rawGoalData)
+
+          return newGoal
+        })
+
+        this.setState({
+          goals: goals,
+          loading: false
+        })
+
+      })
+  }
+
+  nextPage = () => {
+    this.setState(
+      () => {
+        return { page: this.state.page + 1 }
+      },
+      () => {
+        this.getAllGoals()
+      }
+    )
+  }
+
+  lastPage = () => {
+    this.setState(
+      () => {
+        return { page: this.state.page - 1 }
+      },
+      () => {
+        this.getAllGoals()
+      }
+    )
   }
 
   // arrayLength = (array) => {
@@ -32,20 +105,11 @@ class Progress extends Component {
   // })
   // }
 
-  // componentDidMount() {
-  //   axios.get('/goals.json').then(response => {
-  //     console.log(response.data)
-  //     this.setState({
-  //       goals: response.data
-  //     })
-  //   })
-  // }
-  
   render() {
     return (
       <>
         <div className="content">
-          <h2>Savings Goals Progress</h2>
+          <h2>Savings Goals Progress... Page {this.state.page}</h2>
 
           <div className="progress-buttons">
             <div className="row">
@@ -53,59 +117,13 @@ class Progress extends Component {
                 <label htmlFor="name" className="input-label">
                   <strong>Goal:</strong>
                 </label>
-                  {/* <div>
-                    {this.props.goals.slice(0,5).map(goal => {
-                      return (
-                    <div className="input-label">
-                      {goal.goal_name}
-                    </div>
-                    )}
-                    )}
-                  </div> */}
 
-
-
-
-                {/* <div
-                  type="text"
-                  id="name"
-                  name="goal_name"
-                  className="input-label"
-                >
-                  Kid's College
-                        </div>
-                <div
-                  type="text"
-                  id="name"
-                  name="goal_name"
-                  className="input-label"
-                >
-                  Holiday Gifts
-                        </div>
-                <div
-                  type="text"
-                  id="name"
-                  name="goal_name"
-                  className="input-label"
-                >
-                  Vacation
-                        </div>
-                <div
-                  type="text"
-                  id="name"
-                  name="goal_name"
-                  className="input-label"
-                >
-                  New Kitchen
-                        </div>
-                <div
-                  type="text"
-                  id="name"
-                  name="goal_name"
-                  className="input-label"
-                >
-                  Retirement
-                        </div> */}
+                <div>
+                  {this.state.goals.map(goal => {
+                    return <div className="input-label">
+                      {goal.goal_name}</div>
+                  })}
+                </div>
               </div>
 
               <div className="mobile-column">
@@ -118,53 +136,6 @@ class Progress extends Component {
                       {goal.goal_amount}
                     </div>)}
                   </div> */}
-
-                {/* <div>
-                    {this.state.goals.slice(0,5).map(goal => <div className="input-label">
-                      {goal.goal_name}
-                    </div>)}
-                  </div>
-                  
-                <div
-                  type="text"
-                  id="target"
-                  name="target_amount"
-                  className="input-label"
-                >
-                  $100,000.00
-                        </div>
-                <div
-                  type="text"
-                  id="target"
-                  name="target_amount"
-                  className="input-label"
-                >
-                  $2,000.00
-                        </div>
-                <div
-                  type="text"
-                  id="target"
-                  name="target_amount"
-                  className="input-label"
-                >
-                  $1,000.00
-                        </div>
-                <div
-                  type="text"
-                  id="target"
-                  name="target_amount"
-                  className="input-label"
-                >
-                  $10,000.00
-                        </div>
-                <div
-                  type="text"
-                  id="target"
-                  name="target_amount"
-                  className="input-label"
-                >
-                  $4,000,000.00
-                        </div> */}
               </div>
 
               <div className="mobile-column">
@@ -180,47 +151,6 @@ class Progress extends Component {
                       {balance}
                     </div>)}
                   </div> */}
-
-                {/* <div
-                  type="text"
-                  id="current"
-                  name="current_amount"
-                  className="input-label"
-                >
-                  $9,500.00
-                        </div>
-                <div
-                  type="text"
-                  id="current"
-                  name="current_amount"
-                  className="input-label"
-                >
-                  $500.00
-                        </div>
-                <div
-                  type="text"
-                  id="current"
-                  name="current_amount"
-                  className="input-label"
-                >
-                  $100.00
-                        </div>
-                <div
-                  type="text"
-                  id="current"
-                  name="current_amount"
-                  className="input-label"
-                >
-                  $300.00
-                        </div>
-                <div
-                  type="text"
-                  id="current"
-                  name="current_amount"
-                  className="input-label"
-                >
-                  $45,000.00
-                        </div> */}
               </div>
 
               <div className="mobile-column">
@@ -228,66 +158,66 @@ class Progress extends Component {
                   <strong>Progress:</strong>
                 </label>
                 <div className="container">
-                              <div className="skills css">100%</div> 
-                            </div>
-                            <div className="container">
-                              <div className="skills css">100%</div> 
-                            </div>
-                            <div className="container">
-                              <div className="skills css">100%</div> 
-                            </div>
-                            <div className="container">
-                              <div className="skills css">100%</div> 
-                            </div>
-                            <div className="container">
-                              <div className="skills css">100%</div> 
-                            </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div className="progress-buttons">
-            <div className="content">
-              <div className="buttons">
-                <div className="button-column">
-                  <div className="button">
-                    <div
-                      classID="submit"
-                      className="button-label"
-                    >
-                      <button type="edit">
-                        <strong>BACK</strong>
-                      </button>
-                    </div>
-                  </div>
+                  <div className="skills css">100%</div>
                 </div>
-                <div className="button-column">
-                  <div className="button">
-                    <div
-                      classID="submit"
-                      className="button-label"
-                    >
-                      <button type="submit">
-                        <strong>EDIT</strong>
-                      </button>
-                    </div>
-                  </div>
+                <div className="container">
+                  <div className="skills css">100%</div>
                 </div>
-                <div className="button-column">
-                  <div className="button">
-                    <div
-                      classID="submit"
-                      className="button-label"
-                    >
-                      <button type="edit">
-                        <strong>NEXT</strong>
-                      </button>
-                    </div>
-                  </div>
+                <div className="container">
+                  <div className="skills css">100%</div>
+                </div>
+                <div className="container">
+                  <div className="skills css">100%</div>
+                </div>
+                <div className="container">
+                  <div className="skills css">100%</div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div className="progress-buttons">
+          <div className="content">
+            <div className="buttons">
+              <div className="button-column">
+                <div className="button">
+                  <div
+                    classID="submit"
+                    className="button-label"
+                  >
+                    <button onClick={this.lastPage}>
+                      <strong>BACK</strong>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="button-column">
+                <div className="button">
+                  <div
+                    classID="submit"
+                    className="button-label"
+                  >
+                    <button>
+                      <strong>EDIT</strong>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="button-column">
+                <div className="button">
+                  <div
+                    classID="submit"
+                    className="button-label"
+                  >
+                    <button onClick={this.nextPage}>
+                      <strong>NEXT</strong>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </>
     );
   }

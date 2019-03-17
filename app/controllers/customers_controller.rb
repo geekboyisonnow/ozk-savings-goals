@@ -6,15 +6,23 @@ class CustomersController < ApplicationController
   def index
     filter = params[:filter]
     
-    # @customer = Customer.all
-    # customer = current_customer
-
     if filter
       @customers = Customer.all.order(:customer_name).where("customer_name ?", "%#{filter}%")
     else
       @customers = Customer.all.order(:customer_name)
   
     end
+  end
+
+  def current
+    customer = current_customer
+
+    render json:
+      {
+        id: customer.id,
+        customer_name: customer.customer_name,
+        goals: customer.goals
+      }
   end
 
   # GET /customers/1
