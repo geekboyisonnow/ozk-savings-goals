@@ -43,7 +43,7 @@ li {
 .mobile {
     background-color: #e40046;
     color: white;
-    width: 97.8vw;
+    width: 100vw;
     font: 3.2vw 'Quicksand', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
     line-height: 6vh;
     padding: 15px;
@@ -220,6 +220,7 @@ section {
     text-align: left;
     font-size: 1.5vw;
     padding-bottom: 2px;
+    margin-top: 100px;
 }
 
 .button-content {
@@ -343,7 +344,7 @@ p {
 
 body img {
     float: left;
-    width: 50vw;
+    width: 55vw;
     padding-right: 45px;
 }
 
@@ -356,7 +357,7 @@ body img {
 } */
 
 footer {
-    height: 6.2vh;
+    height: 8vh;
     font-size: 2vh;
     color: white;
     text-align: center;

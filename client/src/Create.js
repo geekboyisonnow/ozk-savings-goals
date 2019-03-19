@@ -9,18 +9,10 @@ class Create extends Component {
         super(props)
 
         this.state = {
+            page: 1,
             goals: [],
             newItemText: '',
-            progress_value: 0,
-            customer_id: 1
-        }
-    }
-
-    componentWillMount() {
-        if (auth.isAuthenticated()) {
-            axios.defaults.headers.common = {
-                Authorization: auth.authorizationHeader()
-            }
+            progress_value: 0
         }
     }
 
@@ -44,7 +36,7 @@ class Create extends Component {
         this.reloadAllGoals()
     }
 
-    changeText = event => {
+    _changingText = event => {
         this.setState({
             newItemText: event.target.value
         })
@@ -55,46 +47,55 @@ class Create extends Component {
         let form = event.target
         let formData = new FormData(event.target)
 
-        axios.post('http://localhost:3000/api/goals.json').then(response => {
-            form.reset()
-            this.reloadAllGoals()
-        }).then(response => {
+        axios.post('http://localhost:3000/api/goals.json', formData).then(response => {
+            console.log(response.data)
+            this.setState({
+                goals: response.data
+            })
+            this._changingText()
             form.reset()
             this.reloadAllGoals()
         })
+
+
+        // .then(response => {
+        //     form.reset()
+        //     this.reloadAllGoals()
+        // }).then(response => {
+        // this.changeText()
+        // })
     }
 
-    // createGoal = (event) => {
+    // newItemGoalName = event => {
     //     event.preventDefault()
-    //     let form = event.target
-    //     let formData = new FormData(event.target)
 
-    //     axios.post('http://localhost:3000/api/goals.json', formData,
-    //         {},
-    //         {
-    //             headers: {
-    //                 Authorization: auth.authorizationHeader()
+    //     axios
+    //         .get('http://localhost:3000/api/goals.json',
+    //             {
+    //                 item: {
+    //                     goal_name: this.state.newItemText.goal_name
+    //                 }
     //             }
-    //         }
-    //     ).then(response => {
-    //         form.reset()
-    //         this.reloadAllGoals()
-    //     })
+    //         )
+    //         .then(response => {
+    //             console.log(response.date)
+    //             this.reloadAllGoals()
+    //             this.setState({
+    //                 newItemText: ''
+    //             })
+    //         })
     // }
 
-    // complete = event => {
+    // deleteGoal = event => {
     //     if (auth.isAuthenticated()) {
     //         axios.defaults.headers.common = {
     //             Authorization: auth.authorizationHeader()
     //         }
     //     }
-    //     event.preventDefault()
     //     axios
-    //         .post('http://localhost:3000/api/goals.json',
+    //         .delete('http://localhost:3000/api/goals.json',
     //             {
-    //                 item: {
-    //                     complete: true
-    //                 }
+    //                 item: ''
     //             }
     //         )
     //         .then(response => {
@@ -102,104 +103,12 @@ class Create extends Component {
     //         })
     // }
 
-    newItemGoalName = event => {
-        if (auth.isAuthenticated()) {
-            axios.defaults.headers.common = {
-                Authorization: auth.authorizationHeader()
-            }
-        }
-        event.preventDefault()
-
-        axios
-            .post('http://localhost:3000/api/goals.json',
-                {
-                    item: {
-                        goal_name: this.state.newItemText.goal_name
-                    }
-                }
-            )
-            .then(response => {
-                console.log(response.date)
-                this.reloadAllGoals()
-                this.setState({
-                    newItemText: ''
-                })
-            })
-    }
-
-    newItemGoalAmount = event => {
-        if (auth.isAuthenticated()) {
-            axios.defaults.headers.common = {
-                Authorization: auth.authorizationHeader()
-            }
-        }
-        event.preventDefault()
-
-        axios
-            .post('http://localhost:3000/api/goals.json',
-                {
-                    item: {
-                        goal_amount: this.state.newItemText.goal_amount
-                    }
-                }
-            )
-            .then(response => {
-                console.log(response.date)
-                this.reloadAllGoals()
-                this.setState({
-                    newItemText: ''
-                })
-            })
-    }
-
-    newItemDepositAmount = event => {
-        if (auth.isAuthenticated()) {
-            axios.defaults.headers.common = {
-                Authorization: auth.authorizationHeader()
-            }
-        }
-        event.preventDefault()
-
-        axios
-            .post('http://localhost:3000/api/goals.json',
-                {
-                    item: {
-                        deposit_amount: this.state.newItemText.deposit_amount
-                    }
-                }
-            )
-            .then(response => {
-                console.log(response.date)
-                this.reloadAllGoals()
-                this.setState({
-                    newItemText: ''
-                })
-            })
-    }
-
-    deleteGoal = event => {
-        if (auth.isAuthenticated()) {
-            axios.defaults.headers.common = {
-                Authorization: auth.authorizationHeader()
-            }
-        }
-        axios
-            .delete('http://localhost:3000/api/goals.json',
-                {
-                    item: ''
-                }
-            )
-            .then(response => {
-                this.reloadAllGoals()
-            })
-    }
-
-    progressValue = (progress_value) => {
-        progress_value = 0
-        this.setState({
-            progress_value: this.state.newItemText.goal_amount / this.state.newItemText.deposit_amount
-        })
-    }
+    // progressValue = (progress_value) => {
+    //     progress_value = 0
+    //     this.setState({
+    //         progress_value: this.state.newItemText.goal_amount / this.state.newItemText.deposit_amount
+    //     })
+    // }
 
     render() {
         return (
@@ -232,27 +141,30 @@ class Create extends Component {
                             <div className="column">
 
                                 <input
+                                    // onChange={this.changeText}
                                     type="text"
                                     name="goal[goal_name]"
                                     className="input-label"
                                     placeholder="Your Goal Name"
-                                // onChange={this.changeText}
+                                // onChange={this._changingText}
                                 />
 
                                 <input
+                                    // onChange={this.changeText}
                                     type="money"
                                     name="goal[goal_amount]"
                                     className="input-label"
                                     placeholder="Your Goal Amount"
-                                // onChange={this.changeText}
+                                // onChange={this._changingText}
                                 />
 
                                 <input
+                                    // onChange={this.changeText}
                                     type="money"
-                                    name="deposit[deposit_amount]"
+                                    name="deposits[deposit_amount]"
                                     className="input-label"
                                     placeholder="The Deposit Amount"
-                                // onChange={this.changeText}
+                                // onChange={this._changingText}
                                 />
 
                                 <div className="container">
@@ -260,16 +172,22 @@ class Create extends Component {
                                 </div>
                             </div>
                             <div className="column">
-                                <div>
+                                {/* <div  className="input-label">
                                     {this.createGoal.goal_name}
+                                </div> */}
+                                {/* <div>
+                                    {this.state.goals.map(goal =>
+                                        <div key={goal.id} >
+
+                                            {goal.goal_name}
+
+
+                                        </div>
+                                    )}
+                                </div> */}
+                                <div>
+                                    {this.newItemText}
                                 </div>
-                                {/* {this.props.goals.map(goal => 
-                            <div className="input-label" >
-                                {this.goal_name}
-                                {this.state.newItemText.goal_amount}
-                                {this.state.newItemText.deposit_amount}
-                            </div>
-                            )} */}
                             </div>
                         </div>
                         <div className="button-content">
@@ -278,6 +196,8 @@ class Create extends Component {
                                     Click HERE to Create Your New Goal!
                             </section>
                                 <button type="submit"
+                                    onChange={this._changingText}
+                                //  onClick={this.newItemGoalName}
                                 // key={index}
                                 // className={goalList}
                                 // data-id={this.state.customerID}
@@ -289,6 +209,7 @@ class Create extends Component {
                         </div>
                     </div>
                 </div>
+
             </form>
 
         )

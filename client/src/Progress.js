@@ -3,35 +3,15 @@ import './App.css';
 import axios from 'axios'
 import auth from './auth'
 
-class Goal {
-  constructor(rawGoalData) {
-    this.goalName = rawGoalData.goal_name
-    this.goalAmount = rawGoalData.goal_amount
-
-  }
-
-  name() {
-    return this.goalName
-  }
-
-  targetAmount() {
-    return this.goalAmount
-  }
-
-  // description() {
-  //   return `${this.characterName} has been in ${this.filmCount} films`
-  // }
-}
-
 class Progress extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
       page: 1,
-      customer_id: 8,
       goals: [],
-      loading: false
+      newItemText: '',
+      progress_value: 0
     }
   }
 
@@ -40,36 +20,25 @@ class Progress extends Component {
   }
 
   getAllGoals = () => {
-    this.setState({ loading: true })
-
+    if (auth.isAuthenticated()) {
+      axios.defaults.headers.common = {
+        Authorization: auth.authorizationHeader()
+      }
+    }
     axios
-      .get(`http://localhost:3000/api/goals.json`,
-        {},
-        {
-          headers: {
-            Authorization: auth.authorizationHeader()
-          }
-        }
-      )
-      // , { headers: { 'Access-Control-Allow-Origin': '*' } }
-      // .get(`http://localhost:3000/goals/${this.state.id}`)
-      // .get(`/customers/${this.customer_id}.json`)
-      // .get(`/goals/?page=${this.state.page}.json`)
-      // .then(response => response.json())
-
-      .then(rawData => {
-        let goals = rawData.goals.map(rawGoalData => {
-          let newGoal = new Goal(rawGoalData)
-
-          return newGoal
-        })
-
+      .get('http://localhost:3000/api/goals.json')
+      .then(response => {
+        console.log(response.data)
         this.setState({
-          goals: goals,
-          loading: false
+          goals: response.data
         })
-
       })
+  }
+
+  changeText = event => {
+    this.setState({
+      newItemText: event.target.value
+    })
   }
 
   nextPage = () => {
@@ -101,17 +70,17 @@ class Progress extends Component {
   //   }
   // }
 
-  // getBalance = () => {
-  //   this.setState({
-  //     balance: this.state.deposit_amount.sum
-  // })
-  // }
+  getBalance = () => {
+    this.setState({
+      balance: this.state.deposit_amount.sum
+    })
+  }
 
   render() {
     return (
       <>
         <div className="content">
-          <h2>Savings Goals Progress... Page {this.state.page}</h2>
+          <h2>Savings Goals Progress...</h2>
 
           <div className="progress-buttons">
             <div className="row">
@@ -121,10 +90,9 @@ class Progress extends Component {
                 </label>
 
                 <div>
-                  {this.state.goals.map(goal => {
-                    return <div className="input-label">
-                      {goal.goal_name}</div>
-                  })}
+                  {this.state.goals.slice(0, 5).map(goal => <div key={goal.id} className="input-label">
+                    {goal.goal_name}</div>
+                  )}
                 </div>
               </div>
 
@@ -133,11 +101,11 @@ class Progress extends Component {
                   <strong>Amount:</strong>
                 </label>
 
-                {/* <div>
-                    {this.state.goals.slice(0,5).map(goal => <div className="input-label">$
+                <div>
+                  {this.state.goals.slice(0, 5).map(goal => <div key={goal.id} className="input-label">$
                       {goal.goal_amount}
-                    </div>)}
-                  </div> */}
+                  </div>)}
+                </div>
               </div>
 
               <div className="mobile-column">
@@ -149,12 +117,17 @@ class Progress extends Component {
                 </label>
 
                 {/* <div>
-                    {this.state.goals.balance.map(balance => <div className="input-label">$
-                      {balance}
-                    </div>)}
-                  </div> */}
+                  {this.state.balance.map(balance => <div key={goal.id} className="input-label">$
+                      {goal.balance}
+                  </div>)}
+                </div> */}
               </div>
 
+              <div>
+                {this.state.goals.slice(0, 5).map(goal => <div key={goal.id} className="input-label">$
+                      {goal.deposit_amount}
+                </div>)}
+              </div>
               <div className="mobile-column">
                 <label htmlFor="progress" className="input-label">
                   <strong>Progress:</strong>
@@ -182,7 +155,7 @@ class Progress extends Component {
           <div className="content">
             <div className="buttons">
               <div className="button-column">
-                <div className="button">
+                <div className="buttons">
                   <div
                     classID="submit"
                     className="button-label"
@@ -194,7 +167,7 @@ class Progress extends Component {
                 </div>
               </div>
               <div className="button-column">
-                <div className="button">
+                <div className="buttons">
                   <div
                     classID="submit"
                     className="button-label"
@@ -206,7 +179,7 @@ class Progress extends Component {
                 </div>
               </div>
               <div className="button-column">
-                <div className="button">
+                <div className="buttons">
                   <div
                     classID="submit"
                     className="button-label"
@@ -218,6 +191,9 @@ class Progress extends Component {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="buttons">
+            <h3>Page {this.state.page}</h3>
           </div>
         </div>
       </>

@@ -31,9 +31,7 @@ class GoalsController < ApplicationController
   # POST /goals
   # POST /goals.json
   def create
-    # @goal = current_customer.goals.create!(goal_params)
-    @goal = Goal.goals.create(goal_params)
-
+    @goal = current_customer.goals.create!(goal_params)
     respond_to do |format|
       if @goal.save
         format.html { redirect_to @goal, notice: 'Goal was successfully created.' }

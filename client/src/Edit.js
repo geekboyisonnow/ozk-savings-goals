@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios'
+import auth from './auth'
 
 class Edit extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      page: 1,
       goals: [],
       newItemText: '',
       progress_value: 0
@@ -14,9 +16,15 @@ class Edit extends Component {
   }
 
   reloadAllGoals = () => {
+    if (auth.isAuthenticated()) {
+      axios.defaults.headers.common = {
+        Authorization: auth.authorizationHeader()
+      }
+    }
     axios
-      .get(`http://localhost:3000/api/goals.json`)
+      .get('http://localhost:3000/api/goals.json')
       .then(response => {
+        console.log(response.data)
         this.setState({
           goals: response.data
         })
@@ -33,7 +41,29 @@ class Edit extends Component {
     })
   }
 
-  createGoal = (event) => {
+  nextPage = () => {
+    this.setState(
+      () => {
+        return { page: this.state.page + 1 }
+      },
+      () => {
+        this.getAllGoals()
+      }
+    )
+  }
+
+  lastPage = () => {
+    this.setState(
+      () => {
+        return { page: this.state.page - 1 }
+      },
+      () => {
+        this.getAllGoals()
+      }
+    )
+  }
+
+  editGoal = (event) => {
     event.preventDefault()
     let form = event.target
     let formData = new FormData(event.target)
@@ -59,65 +89,65 @@ class Edit extends Component {
       })
   }
 
-  newItemGoalName = event => {
-    event.preventDefault()
+  // newItemGoalName = event => {
+  //   event.preventDefault()
 
-    axios
-      .put(`http://localhost:3000/api/goals.json`,
-        {
-          item: {
-            text: this.state.newItemText.goal_name
-          }
-        }
-      )
-      .then(response => {
-        console.log(response.date)
-        this.reloadAllGoals()
-        this.setState({
-          newItemText: ''
-        })
-      })
-  }
+  //   axios
+  //     .put(`http://localhost:3000/api/goals.json`,
+  //       {
+  //         item: {
+  //           text: this.state.newItemText.goal_name
+  //         }
+  //       }
+  //     )
+  //     .then(response => {
+  //       console.log(response.date)
+  //       this.reloadAllGoals()
+  //       this.setState({
+  //         newItemText: ''
+  //       })
+  //     })
+  // }
 
-  newItemGoalAmount = event => {
-    event.preventDefault()
+  // newItemGoalAmount = event => {
+  //   event.preventDefault()
 
-    axios
-      .put(`http://localhost:3000/api/goals.json`,
-        {
-          item: {
-            text: this.state.newItemText.goal_amount
-          }
-        }
-      )
-      .then(response => {
-        console.log(response.date)
-        this.reloadAllGoals()
-        this.setState({
-          newItemText: ''
-        })
-      })
-  }
+  //   axios
+  //     .put(`http://localhost:3000/api/goals.json`,
+  //       {
+  //         item: {
+  //           text: this.state.newItemText.goal_amount
+  //         }
+  //       }
+  //     )
+  //     .then(response => {
+  //       console.log(response.date)
+  //       this.reloadAllGoals()
+  //       this.setState({
+  //         newItemText: ''
+  //       })
+  //     })
+  // }
 
-  newItemDepositAmount = event => {
-    event.preventDefault()
+  // newItemDepositAmount = event => {
+  //   event.preventDefault()
 
-    axios
-      .put(`http://localhost:3000/api/goals.json`,
-        {
-          item: {
-            text: this.state.newItemText.deposit_amount
-          }
-        }
-      )
-      .then(response => {
-        console.log(response.date)
-        this.reloadAllGoals()
-        this.setState({
-          newItemText: ''
-        })
-      })
-  }
+  //   axios
+  //     .put(`http://localhost:3000/api/goals.json`,
+  //       {
+  //         item: {
+  //           text: this.state.newItemText.deposit_amount
+  //         }
+  //       }
+  //     )
+  //     .then(response => {
+  //       console.log(response.date)
+  //       this.reloadAllGoals()
+  //       this.setState({
+  //         newItemText: ''
+  //       })
+  //     })
+  // }
 
   deleteGoal = event => {
     axios
@@ -143,7 +173,7 @@ class Edit extends Component {
   render() {
     return (
       <>
-        <form onSubmit={this.complete} action="/update" method="put" className="row">
+        <form onSubmit={this.editGoal} action="/update" method="put" className="row">
           <div className="body">
             <div className="content">
               <h2>Edit My Savings Goals</h2>
@@ -157,12 +187,12 @@ class Edit extends Component {
                   <input
                     type="text"
                     id="name"
-                    name="goal_name"
+                    name="goal[goal_name]"
                     className="label"
                     placeholder="Kid's College Fund"
                     onChange={this.complete}
                   />
-                  <input
+                  {/* <input
                     type="text"
                     id="name"
                     name="goal_name"
@@ -193,7 +223,7 @@ class Edit extends Component {
                     className="label"
                     placeholder="Retirement"
                     onChange={this.complete}
-                  />
+                  /> */}
                 </div>
                 <div className="input-column">
                   <label htmlFor="name" className="label">
@@ -205,11 +235,23 @@ class Edit extends Component {
                     min="0.01"
                     step="0.01"
                     max=""
-                    value="$100,000.00"
+                    // value="100,000.00"
+                    id="target"
+                    name="goal[goal_amount]"
+                    className="label"
+                    placeholder="100,000.00"
+                    onChange={this.complete}
+                  />
+                  {/* <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    // value="2,000.00"
                     id="target"
                     name="target_amount"
                     className="label"
-                    placeholder="$100,000.00"
+                    placeholder="2,000.00"
                     onChange={this.complete}
                   />
                   <input
@@ -217,11 +259,11 @@ class Edit extends Component {
                     min="0.01"
                     step="0.01"
                     max=""
-                    value="$2,000.00"
+                    // value="1,000.00"
                     id="target"
                     name="target_amount"
                     className="label"
-                    placeholder="$2,000.00"
+                    placeholder="1,000.00"
                     onChange={this.complete}
                   />
                   <input
@@ -229,11 +271,11 @@ class Edit extends Component {
                     min="0.01"
                     step="0.01"
                     max=""
-                    value="$1,000.00"
+                    // value="10,000.00"
                     id="target"
                     name="target_amount"
                     className="label"
-                    placeholder="$1,000.00"
+                    placeholder="10,000.00"
                     onChange={this.complete}
                   />
                   <input
@@ -241,25 +283,13 @@ class Edit extends Component {
                     min="0.01"
                     step="0.01"
                     max=""
-                    value="$10,000.00"
+                    // value="4,000,000.00"
                     id="target"
                     name="target_amount"
                     className="label"
-                    placeholder="$10,000.00"
+                    placeholder="4,000,000.00"
                     onChange={this.complete}
-                  />
-                  <input
-                    type="number"
-                    min="0.01"
-                    step="0.01"
-                    max=""
-                    value="$4,000,000.00"
-                    id="target"
-                    name="target_amount"
-                    className="label"
-                    placeholder="$4,000,000.00"
-                    onChange={this.complete}
-                  />
+                  /> */}
                 </div>
                 <div className="input-column">
                   <label htmlFor="name" className="label">
@@ -271,11 +301,23 @@ class Edit extends Component {
                     min="0.01"
                     step="0.01"
                     max=""
-                    value="$100,000.00"
+                    // value="100,000.00"
+                    id="target"
+                    name="deposit[deposit_amount]"
+                    className="label"
+                    placeholder="100,000.00"
+                    onChange={this.complete}
+                  />
+                  {/* <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    // value="2,000.00"
                     id="target"
                     name="target_amount"
                     className="label"
-                    placeholder="$100,000.00"
+                    placeholder="2,000.00"
                     onChange={this.complete}
                   />
                   <input
@@ -283,11 +325,11 @@ class Edit extends Component {
                     min="0.01"
                     step="0.01"
                     max=""
-                    value="$2,000.00"
+                    // value="1,000.00"
                     id="target"
                     name="target_amount"
                     className="label"
-                    placeholder="$2,000.00"
+                    placeholder="1,000.00"
                     onChange={this.complete}
                   />
                   <input
@@ -295,11 +337,11 @@ class Edit extends Component {
                     min="0.01"
                     step="0.01"
                     max=""
-                    value="$1,000.00"
+                    // value="10,000.00"
                     id="target"
                     name="target_amount"
                     className="label"
-                    placeholder="$1,000.00"
+                    placeholder="10,000.00"
                     onChange={this.complete}
                   />
                   <input
@@ -307,25 +349,13 @@ class Edit extends Component {
                     min="0.01"
                     step="0.01"
                     max=""
-                    value="$10,000.00"
+                    // value="4,000,000.00"
                     id="target"
                     name="target_amount"
                     className="label"
-                    placeholder="$10,000.00"
+                    placeholder="4,000,000.00"
                     onChange={this.complete}
-                  />
-                  <input
-                    type="number"
-                    min="0.01"
-                    step="0.01"
-                    max=""
-                    value="$4,000,000.00"
-                    id="target"
-                    name="target_amount"
-                    className="label"
-                    placeholder="$4,000,000.00"
-                    onChange={this.complete}
-                  />
+                  /> */}
                 </div>
                 <div className="input-column">
                   <label htmlFor="name" className="label">
@@ -345,10 +375,10 @@ class Edit extends Component {
                           </div> */}
                   <div className="button-column">
                     <div className="container">1000</div>
+                    {/* <div className="container">1000</div>
                     <div className="container">1000</div>
                     <div className="container">1000</div>
-                    <div className="container">1000</div>
-                    <div className="container">1000</div>
+                    <div className="container">1000</div> */}
                   </div>
                 </div>
 
@@ -359,7 +389,7 @@ class Edit extends Component {
                   <div className="container">
                     <div className="skills css">100%</div>
                   </div>
-                  <div className="container">
+                  {/* <div className="container">
                     <div className="skills css">100%</div>
                   </div>
                   <div className="container">
@@ -370,7 +400,7 @@ class Edit extends Component {
                   </div>
                   <div className="container">
                     <div className="skills css">100%</div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -383,7 +413,7 @@ class Edit extends Component {
                       classID="submit"
                       className="button-label"
                     >
-                      <button type="edit">
+                      <button type="edit" onClick={this.lastPage}>
                         <strong>BACK</strong>
                       </button>
                     </div>
@@ -422,13 +452,16 @@ class Edit extends Component {
                       classID="submit"
                       className="button-label"
                     >
-                      <button type="edit">
+                      <button type="edit" onClick={this.nextPage}>
                         <strong>NEXT</strong>
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="buttons">
+              <h3>Page {this.state.page}</h3>
             </div>
           </div>
         </form>
