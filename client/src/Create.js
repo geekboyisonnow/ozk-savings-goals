@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import './App.css'
-
+import auth from './auth'
 
 
 class Create extends Component {
@@ -15,7 +15,20 @@ class Create extends Component {
         }
     }
 
+    // componentWillMount() {
+    //     if (auth.isAuthenticated()) {
+    //         axios.defaults.headers.common = {
+    //             Authorization: auth.authorizationHeader()
+    //         }
+    //     }
+    // }
+
     reloadAllGoals = () => {
+        if (auth.isAuthenticated()) {
+            axios.defaults.headers.common = {
+                Authorization: auth.authorizationHeader()
+            }
+        }
         axios
             .get(`/goals.json`)
             .then(response => {
@@ -41,13 +54,36 @@ class Create extends Component {
         let form = event.target
         let formData = new FormData(event.target)
 
-        axios.post(`http://localhost:3000/goals.json`, formData).then(response => {
+        axios.post(`/goals.json`).then(response => {
             form.reset()
             this.reloadAllGoals()
         })
     }
 
+    // createGoal = (event) => {
+    //     event.preventDefault()
+    //     let form = event.target
+    //     let formData = new FormData(event.target)
+
+    //     axios.post(`/goals.json`, formData,
+    //         {},
+    //         {
+    //             headers: {
+    //                 Authorization: auth.authorizationHeader()
+    //             }
+    //         }
+    //     ).then(response => {
+    //         form.reset()
+    //         this.reloadAllGoals()
+    //     })
+    // }
+
     complete = event => {
+        if (auth.isAuthenticated()) {
+            axios.defaults.headers.common = {
+                Authorization: auth.authorizationHeader()
+            }
+        }
         event.preventDefault()
         axios
             .post(`/goals/${event.target.dataset.goal_id}`,
@@ -63,6 +99,11 @@ class Create extends Component {
     }
 
     deleteGoal = event => {
+        if (auth.isAuthenticated()) {
+            axios.defaults.headers.common = {
+                Authorization: auth.authorizationHeader()
+            }
+        }
         axios
             .delete(
                 `/goals.json${
@@ -77,6 +118,11 @@ class Create extends Component {
     }
 
     newItemGoalName = event => {
+        if (auth.isAuthenticated()) {
+            axios.defaults.headers.common = {
+                Authorization: auth.authorizationHeader()
+            }
+        }
         event.preventDefault()
 
         axios
@@ -97,6 +143,11 @@ class Create extends Component {
     }
 
     newItemGoalAmount = event => {
+        if (auth.isAuthenticated()) {
+            axios.defaults.headers.common = {
+                Authorization: auth.authorizationHeader()
+            }
+        }
         event.preventDefault()
 
         axios
@@ -117,6 +168,11 @@ class Create extends Component {
     }
 
     newItemDepositAmount = event => {
+        if (auth.isAuthenticated()) {
+            axios.defaults.headers.common = {
+                Authorization: auth.authorizationHeader()
+            }
+        }
         event.preventDefault()
 
         axios

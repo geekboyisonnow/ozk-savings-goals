@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios'
+import auth from './auth'
 
 class Goal {
   constructor(rawGoalData) {
@@ -42,14 +43,15 @@ class Progress extends Component {
     this.setState({ loading: true })
 
     axios
-      .get(`http://localhost:3000/goals/8.json`, { headers: { 'Access-Control-Allow-Origin': '*' } })
-      //   {},
-      //   {
-      //     headers: {
-      //       Authorization: auth.authorizationHeader()
-      //     }
-      //   }
-      // )
+      .get(`http://localhost:3000/goals.json`,
+        {},
+        {
+          headers: {
+            Authorization: auth.authorizationHeader()
+          }
+        }
+      )
+      // , { headers: { 'Access-Control-Allow-Origin': '*' } }
       // .get(`http://localhost:3000/goals/${this.state.id}`)
       // .get(`/customers/${this.customer_id}.json`)
       // .get(`/goals/?page=${this.state.page}.json`)
