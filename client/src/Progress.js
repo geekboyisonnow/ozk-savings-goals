@@ -43,7 +43,7 @@ class Progress extends Component {
     this.setState({ loading: true })
 
     axios
-      .get(`http://localhost:3000/goals.json`,
+      .get(`http://localhost:3000/api/goals.json`,
         {},
         {
           headers: {

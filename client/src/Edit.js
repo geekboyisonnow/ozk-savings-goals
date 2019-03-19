@@ -15,7 +15,7 @@ class Edit extends Component {
 
   reloadAllGoals = () => {
     axios
-      .get(`/goals.json`)
+      .get(`http://localhost:3000/api/goals.json`)
       .then(response => {
         this.setState({
           goals: response.data
@@ -38,7 +38,7 @@ class Edit extends Component {
     let form = event.target
     let formData = new FormData(event.target)
 
-    axios.post(`/goals.json`, formData).then(response => {
+    axios.put(`http://localhost:3000/api/goals.json`, formData).then(response => {
       form.reset()
       this.reloadAllGoals()
     })
@@ -47,7 +47,7 @@ class Edit extends Component {
   complete = event => {
     event.preventDefault()
     axios
-      .post(`/goals/${event.target.dataset.goal_id}`,
+      .put(`/goals/${event.target.dataset.goal_id}`,
         {
           item: {
             complete: true
@@ -59,25 +59,11 @@ class Edit extends Component {
       })
   }
 
-  deleteGoal = event => {
-    axios
-      .delete(
-        `/goals.json${
-        event.target.dataset.goal_id}`,
-        {
-          item: ''
-        }
-      )
-      .then(response => {
-        this.reloadAllGoals()
-      })
-  }
-
   newItemGoalName = event => {
     event.preventDefault()
 
     axios
-      .post(`/goals.json`,
+      .put(`http://localhost:3000/api/goals.json`,
         {
           item: {
             text: this.state.newItemText.goal_name
@@ -97,7 +83,7 @@ class Edit extends Component {
     event.preventDefault()
 
     axios
-      .post(`/goals.json`,
+      .put(`http://localhost:3000/api/goals.json`,
         {
           item: {
             text: this.state.newItemText.goal_amount
@@ -117,7 +103,7 @@ class Edit extends Component {
     event.preventDefault()
 
     axios
-      .post(`/goals.json`,
+      .put(`http://localhost:3000/api/goals.json`,
         {
           item: {
             text: this.state.newItemText.deposit_amount
@@ -133,6 +119,19 @@ class Edit extends Component {
       })
   }
 
+  deleteGoal = event => {
+    axios
+      .delete(
+        `http://localhost:3000/api/goals.json${
+        event.target.dataset.goal_id}`,
+        {
+          item: ''
+        }
+      )
+      .then(response => {
+        this.reloadAllGoals()
+      })
+  }
 
   progressValue = (progress_value) => {
     progress_value = 0
@@ -140,183 +139,200 @@ class Edit extends Component {
       progress_value: this.state.newItemText.goal_amount / this.state.newItemText.deposit_amount
     })
   }
+
   render() {
     return (
       <>
-        <div className="body">
-          <div className="content">
-            <h2>Edit My Savings Goals</h2>
-            <p></p>
-            <div className="row" classId="progress">
-              <div className="input-column">
-                <label for="name" className="label">
-                  <strong>My Goals:</strong>
-                </label>
+        <form onSubmit={this.complete} action="/update" method="put" className="row">
+          <div className="body">
+            <div className="content">
+              <h2>Edit My Savings Goals</h2>
+              <p></p>
+              <div className="row" classID="progress">
+                <div className="input-column">
+                  <label htmlFor="name" className="label">
+                    <strong>My Goals:</strong>
+                  </label>
 
-                <input
-                  type="text"
-                  id="name"
-                  name="goal_name"
-                  className="label"
-                  placeholder="Kid's College Fund"
-                />
-                <input
-                  type="text"
-                  id="name"
-                  name="goal_name"
-                  className="label"
-                  placeholder="Holiday Gifts"
-                />
-                <input
-                  type="text"
-                  id="name"
-                  name="goal_name"
-                  className="label"
-                  placeholder="Vacation"
-                />
-                <input
-                  type="text"
-                  id="name"
-                  name="goal_name"
-                  className="label"
-                  placeholder="New Kitchen"
-                />
-                <input
-                  type="text"
-                  id="name"
-                  name="goal_name"
-                  className="label"
-                  placeholder="Retirement"
-                />
-              </div>
-              <div className="input-column">
-                <label for="name" className="label">
-                  <strong>Goal Amount:</strong>
-                </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="goal_name"
+                    className="label"
+                    placeholder="Kid's College Fund"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="text"
+                    id="name"
+                    name="goal_name"
+                    className="label"
+                    placeholder="Holiday Gifts"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="text"
+                    id="name"
+                    name="goal_name"
+                    className="label"
+                    placeholder="Vacation"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="text"
+                    id="name"
+                    name="goal_name"
+                    className="label"
+                    placeholder="New Kitchen"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="text"
+                    id="name"
+                    name="goal_name"
+                    className="label"
+                    placeholder="Retirement"
+                    onChange={this.complete}
+                  />
+                </div>
+                <div className="input-column">
+                  <label htmlFor="name" className="label">
+                    <strong>Goal Amount:</strong>
+                  </label>
 
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  max=""
-                  value="$100,000.00"
-                  id="target"
-                  name="target_amount"
-                  className="label"
-                  placeholder="$100,000.00"
-                />
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  max=""
-                  value="$2,000.00"
-                  id="target"
-                  name="target_amount"
-                  className="label"
-                  placeholder="$2,000.00"
-                />
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  max=""
-                  value="$1,000.00"
-                  id="target"
-                  name="target_amount"
-                  className="label"
-                  placeholder="$1,000.00"
-                />
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  max=""
-                  value="$10,000.00"
-                  id="target"
-                  name="target_amount"
-                  className="label"
-                  placeholder="$10,000.00"
-                />
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  max=""
-                  value="$4,000,000.00"
-                  id="target"
-                  name="target_amount"
-                  className="label"
-                  placeholder="$4,000,000.00"
-                />
-              </div>
-              <div className="input-column">
-                <label for="name" className="label">
-                  <strong>Deposit Amount:</strong>
-                </label>
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    value="$100,000.00"
+                    id="target"
+                    name="target_amount"
+                    className="label"
+                    placeholder="$100,000.00"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    value="$2,000.00"
+                    id="target"
+                    name="target_amount"
+                    className="label"
+                    placeholder="$2,000.00"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    value="$1,000.00"
+                    id="target"
+                    name="target_amount"
+                    className="label"
+                    placeholder="$1,000.00"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    value="$10,000.00"
+                    id="target"
+                    name="target_amount"
+                    className="label"
+                    placeholder="$10,000.00"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    value="$4,000,000.00"
+                    id="target"
+                    name="target_amount"
+                    className="label"
+                    placeholder="$4,000,000.00"
+                    onChange={this.complete}
+                  />
+                </div>
+                <div className="input-column">
+                  <label htmlFor="name" className="label">
+                    <strong>Deposit Amount:</strong>
+                  </label>
 
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  max=""
-                  value="$100,000.00"
-                  id="target"
-                  name="target_amount"
-                  className="label"
-                  placeholder="$100,000.00"
-                />
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  max=""
-                  value="$2,000.00"
-                  id="target"
-                  name="target_amount"
-                  className="label"
-                  placeholder="$2,000.00"
-                />
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  max=""
-                  value="$1,000.00"
-                  id="target"
-                  name="target_amount"
-                  className="label"
-                  placeholder="$1,000.00"
-                />
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  max=""
-                  value="$10,000.00"
-                  id="target"
-                  name="target_amount"
-                  className="label"
-                  placeholder="$10,000.00"
-                />
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  max=""
-                  value="$4,000,000.00"
-                  id="target"
-                  name="target_amount"
-                  className="label"
-                  placeholder="$4,000,000.00"
-                />
-              </div>
-              <div className="input-column">
-                <label for="name" className="label">
-                  <strong>Balance:</strong>
-                </label>
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    value="$100,000.00"
+                    id="target"
+                    name="target_amount"
+                    className="label"
+                    placeholder="$100,000.00"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    value="$2,000.00"
+                    id="target"
+                    name="target_amount"
+                    className="label"
+                    placeholder="$2,000.00"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    value="$1,000.00"
+                    id="target"
+                    name="target_amount"
+                    className="label"
+                    placeholder="$1,000.00"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    value="$10,000.00"
+                    id="target"
+                    name="target_amount"
+                    className="label"
+                    placeholder="$10,000.00"
+                    onChange={this.complete}
+                  />
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    max=""
+                    value="$4,000,000.00"
+                    id="target"
+                    name="target_amount"
+                    className="label"
+                    placeholder="$4,000,000.00"
+                    onChange={this.complete}
+                  />
+                </div>
+                <div className="input-column">
+                  <label htmlFor="name" className="label">
+                    <strong>Balance:</strong>
+                  </label>
 
-                {/* <div>{this.state.goals.map((goal, index) => {
+                  {/* <div>{this.state.goals.map((goal, index) => {
                                 const goalList = goal.complete ? 'complete' : ''
                                   return (
                                     <li onClick={this.complete}
@@ -327,86 +343,95 @@ class Edit extends Component {
                                   )}
                                   )}
                           </div> */}
-                <div className="button-column">
-                  <div className="container">1000</div>
-                  <div className="container">1000</div>
-                  <div className="container">1000</div>
-                  <div className="container">1000</div>
-                  <div className="container">1000</div>
+                  <div className="button-column">
+                    <div className="container">1000</div>
+                    <div className="container">1000</div>
+                    <div className="container">1000</div>
+                    <div className="container">1000</div>
+                    <div className="container">1000</div>
+                  </div>
                 </div>
-              </div>
 
-              <div className="column">
-                <label for="date" className="label">
-                  <strong>Progress:</strong>
-                </label>
-                <div className="container">
-                  <div className="skills css">100%</div>
+                <div className="column">
+                  <label htmlFor="date" className="label">
+                    <strong>Progress:</strong>
+                  </label>
+                  <div className="container">
+                    <div className="skills css">100%</div>
+                  </div>
+                  <div className="container">
+                    <div className="skills css">100%</div>
+                  </div>
+                  <div className="container">
+                    <div className="skills css">100%</div>
+                  </div>
+                  <div className="container">
+                    <div className="skills css">100%</div>
+                  </div>
+                  <div className="container">
+                    <div className="skills css">100%</div>
+                  </div>
                 </div>
-                <div className="container">
-                  <div className="skills css">100%</div>
+              </div>
+            </div>
+            <div className="edit-content">
+              <div className="buttons">
+                <div className="button-column">
+                  <div
+                    className="button">
+                    <div
+                      classID="submit"
+                      className="button-label"
+                    >
+                      <button type="edit">
+                        <strong>BACK</strong>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="container">
-                  <div className="skills css">100%</div>
+                <div className="button-column">
+                  <div
+                    className="button">
+                    <div
+                      classID="submit"
+                      className="button-label"
+                    >
+                      <button type="submit">
+                        <strong>UPDATE</strong>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="container">
-                  <div className="skills css">100%</div>
+                <div className="button-column">
+                  <div
+                    className="button">
+                    <div
+                      classID="submit"
+                      className="button-label"
+                    >
+                      <button type="edit">
+                        <strong>DELETE</strong>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="container">
-                  <div className="skills css">100%</div>
+                <div className="button-column">
+                  <div
+                    className="button">
+                    <div
+                      classID="submit"
+                      className="button-label"
+                    >
+                      <button type="edit">
+                        <strong>NEXT</strong>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="edit-content">
-            <div className="buttons">
-              <div className="button-column">
-                <div
-                  class="button"
-                  classId="submit"
-                  className="button-label"
-                >
-                  <button type="edit">
-                    <strong>BACK</strong>
-                  </button>
-                </div>
-              </div>
-              <div className="button-column">
-                <div
-                  class="button"
-                  classId="submit"
-                  className="button-label"
-                >
-                  <button type="submit">
-                    <strong>UPDATE</strong>
-                  </button>
-                </div>
-              </div>
-              <div className="button-column">
-                <div
-                  class="button"
-                  classId="submit"
-                  className="button-label"
-                >
-                  <button type="edit">
-                    <strong>DELETE</strong>
-                  </button>
-                </div>
-              </div>
-              <div className="button-column">
-                <div
-                  class="button"
-                  classId="submit"
-                  className="button-label"
-                >
-                  <button type="edit">
-                    <strong>NEXT</strong>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </form>
       </>
     );
   }

@@ -43,7 +43,7 @@ class App extends Component {
         <>
           <Route path="/login" render={() => {
             auth.login()
-            return <></>
+            // return <></>
           }}
           />
           <Route path="/logout" render={() => {

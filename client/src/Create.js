@@ -11,17 +11,18 @@ class Create extends Component {
         this.state = {
             goals: [],
             newItemText: '',
-            progress_value: 0
+            progress_value: 0,
+            customer_id: 1
         }
     }
 
-    // componentWillMount() {
-    //     if (auth.isAuthenticated()) {
-    //         axios.defaults.headers.common = {
-    //             Authorization: auth.authorizationHeader()
-    //         }
-    //     }
-    // }
+    componentWillMount() {
+        if (auth.isAuthenticated()) {
+            axios.defaults.headers.common = {
+                Authorization: auth.authorizationHeader()
+            }
+        }
+    }
 
     reloadAllGoals = () => {
         if (auth.isAuthenticated()) {
@@ -30,7 +31,7 @@ class Create extends Component {
             }
         }
         axios
-            .get(`/goals.json`)
+            .get('http://localhost:3000/api/goals.json')
             .then(response => {
                 console.log(response.data)
                 this.setState({
@@ -54,7 +55,10 @@ class Create extends Component {
         let form = event.target
         let formData = new FormData(event.target)
 
-        axios.post(`/goals.json`).then(response => {
+        axios.post('http://localhost:3000/api/goals.json').then(response => {
+            form.reset()
+            this.reloadAllGoals()
+        }).then(response => {
             form.reset()
             this.reloadAllGoals()
         })
@@ -65,7 +69,7 @@ class Create extends Component {
     //     let form = event.target
     //     let formData = new FormData(event.target)
 
-    //     axios.post(`/goals.json`, formData,
+    //     axios.post('http://localhost:3000/api/goals.json', formData,
     //         {},
     //         {
     //             headers: {
@@ -78,44 +82,25 @@ class Create extends Component {
     //     })
     // }
 
-    complete = event => {
-        if (auth.isAuthenticated()) {
-            axios.defaults.headers.common = {
-                Authorization: auth.authorizationHeader()
-            }
-        }
-        event.preventDefault()
-        axios
-            .post(`/goals/${event.target.dataset.goal_id}`,
-                {
-                    item: {
-                        complete: true
-                    }
-                }
-            )
-            .then(response => {
-                this.reloadAllGoals()
-            })
-    }
-
-    deleteGoal = event => {
-        if (auth.isAuthenticated()) {
-            axios.defaults.headers.common = {
-                Authorization: auth.authorizationHeader()
-            }
-        }
-        axios
-            .delete(
-                `/goals.json${
-                event.target.dataset.goal_id}`,
-                {
-                    item: ''
-                }
-            )
-            .then(response => {
-                this.reloadAllGoals()
-            })
-    }
+    // complete = event => {
+    //     if (auth.isAuthenticated()) {
+    //         axios.defaults.headers.common = {
+    //             Authorization: auth.authorizationHeader()
+    //         }
+    //     }
+    //     event.preventDefault()
+    //     axios
+    //         .post('http://localhost:3000/api/goals.json',
+    //             {
+    //                 item: {
+    //                     complete: true
+    //                 }
+    //             }
+    //         )
+    //         .then(response => {
+    //             this.reloadAllGoals()
+    //         })
+    // }
 
     newItemGoalName = event => {
         if (auth.isAuthenticated()) {
@@ -126,10 +111,10 @@ class Create extends Component {
         event.preventDefault()
 
         axios
-            .post(`/goals.json`,
+            .post('http://localhost:3000/api/goals.json',
                 {
                     item: {
-                        text: this.state.newItemText.goal_name
+                        goal_name: this.state.newItemText.goal_name
                     }
                 }
             )
@@ -151,10 +136,10 @@ class Create extends Component {
         event.preventDefault()
 
         axios
-            .post(`/goals.json`,
+            .post('http://localhost:3000/api/goals.json',
                 {
                     item: {
-                        text: this.state.newItemText.goal_amount
+                        goal_amount: this.state.newItemText.goal_amount
                     }
                 }
             )
@@ -176,10 +161,10 @@ class Create extends Component {
         event.preventDefault()
 
         axios
-            .post(`/goals.json`,
+            .post('http://localhost:3000/api/goals.json',
                 {
                     item: {
-                        text: this.state.newItemText.deposit_amount
+                        deposit_amount: this.state.newItemText.deposit_amount
                     }
                 }
             )
@@ -192,6 +177,22 @@ class Create extends Component {
             })
     }
 
+    deleteGoal = event => {
+        if (auth.isAuthenticated()) {
+            axios.defaults.headers.common = {
+                Authorization: auth.authorizationHeader()
+            }
+        }
+        axios
+            .delete('http://localhost:3000/api/goals.json',
+                {
+                    item: ''
+                }
+            )
+            .then(response => {
+                this.reloadAllGoals()
+            })
+    }
 
     progressValue = (progress_value) => {
         progress_value = 0
