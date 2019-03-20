@@ -36,9 +36,9 @@ class Create extends Component {
         this.reloadAllGoals()
     }
 
-    _changingText = event => {
+    _changeDeposit = event => {
         this.setState({
-            newItemText: event.target.value
+            newDepositData: event.target.value
         })
     }
 
@@ -50,9 +50,9 @@ class Create extends Component {
         axios.post('http://localhost:3000/api/goals.json', formData).then(response => {
             console.log(response.data)
             this.setState({
-                goals: response.data
+                goals: response.data,
+                deposits: response.data
             })
-            this._changingText()
             form.reset()
             this.reloadAllGoals()
         })
@@ -65,26 +65,6 @@ class Create extends Component {
         // this.changeText()
         // })
     }
-
-    // newItemGoalName = event => {
-    //     event.preventDefault()
-
-    //     axios
-    //         .get('http://localhost:3000/api/goals.json',
-    //             {
-    //                 item: {
-    //                     goal_name: this.state.newItemText.goal_name
-    //                 }
-    //             }
-    //         )
-    //         .then(response => {
-    //             console.log(response.date)
-    //             this.reloadAllGoals()
-    //             this.setState({
-    //                 newItemText: ''
-    //             })
-    //         })
-    // }
 
     // deleteGoal = event => {
     //     if (auth.isAuthenticated()) {
@@ -159,34 +139,15 @@ class Create extends Component {
                                 />
 
                                 <input
-                                    // onChange={this.changeText}
+                                    // onChange={this._changeDeposit}
                                     type="money"
-                                    name="deposits[deposit_amount]"
+                                    name="goal[deposits][deposit_amount]"
                                     className="input-label"
                                     placeholder="The Deposit Amount"
-                                // onChange={this._changingText}
                                 />
 
                                 <div className="container">
                                     <div className="skills css">100%</div>
-                                </div>
-                            </div>
-                            <div className="column">
-                                {/* <div  className="input-label">
-                                    {this.createGoal.goal_name}
-                                </div> */}
-                                {/* <div>
-                                    {this.state.goals.map(goal =>
-                                        <div key={goal.id} >
-
-                                            {goal.goal_name}
-
-
-                                        </div>
-                                    )}
-                                </div> */}
-                                <div>
-                                    {this.newItemText}
                                 </div>
                             </div>
                         </div>
@@ -195,13 +156,7 @@ class Create extends Component {
                                 <section>
                                     Click HERE to Create Your New Goal!
                             </section>
-                                <button type="submit"
-                                    onChange={this._changingText}
-                                //  onClick={this.newItemGoalName}
-                                // key={index}
-                                // className={goalList}
-                                // data-id={this.state.customerID}
-                                >
+                                <button type="submit">
                                     <strong>CREATE</strong>
                                 </button>
                             </div>

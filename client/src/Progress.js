@@ -10,6 +10,7 @@ class Progress extends Component {
     this.state = {
       page: 1,
       goals: [],
+      deposits: [],
       newItemText: '',
       progress_value: 0
     }
@@ -17,6 +18,7 @@ class Progress extends Component {
 
   componentDidMount = () => {
     this.getAllGoals()
+    this.getAllDeposits()
   }
 
   getAllGoals = () => {
@@ -35,10 +37,20 @@ class Progress extends Component {
       })
   }
 
-  changeText = event => {
-    this.setState({
-      newItemText: event.target.value
-    })
+  getAllDeposits = () => {
+    if (auth.isAuthenticated()) {
+      axios.defaults.headers.common = {
+        Authorization: auth.authorizationHeader()
+      }
+    }
+    axios
+      .get('http://localhost:3000/api/deposits.json')
+      .then(response => {
+        console.log(response.data)
+        this.setState({
+          deposits: response.data
+        })
+      })
   }
 
   nextPage = () => {
@@ -72,7 +84,13 @@ class Progress extends Component {
 
   getBalance = () => {
     this.setState({
-      balance: this.state.deposit_amount.sum
+      balance: this.state.goal.id.deposits.sum
+    })
+  }
+
+  changeText = event => {
+    this.setState({
+      newItemText: event.target.value
     })
   }
 
@@ -115,18 +133,25 @@ class Progress extends Component {
                 >
                   <strong>Balance:</strong>
                 </label>
+                {/* <div key={this.state.goals.goal_id}>
+                  {this.state.balance}
+                </div> */}
 
                 {/* <div>
                   {this.state.balance.map(balance => <div key={goal.id} className="input-label">$
                       {goal.balance}
                   </div>)}
                 </div> */}
-              </div>
 
-              <div>
-                {this.state.goals.slice(0, 5).map(goal => <div key={goal.id} className="input-label">$
-                      {goal.deposit_amount}
-                </div>)}
+                {/* <div key={goal.id}>
+                  {this.balance}
+                </div> */}
+
+                <div>
+                  {this.state.deposits.slice(0, 5).map(deposit => <div key={deposit.id} className="input-label">
+                    $ {deposit.deposit_amount}
+                  </div>)}
+                </div>
               </div>
               <div className="mobile-column">
                 <label htmlFor="progress" className="input-label">
